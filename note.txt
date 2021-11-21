@@ -1,0 +1,3 @@
+packpages require 
+
+pip install libsass django-compressor django-sass-processor
