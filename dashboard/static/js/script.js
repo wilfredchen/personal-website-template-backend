@@ -1,11 +1,29 @@
-var myMenu = new OSREC.superslide({
-  slider: document.querySelector(".mobileMenu"),
-  content: document.querySelector(".main"),
-  animation: "slideLeft",
-  slideContent: false,
-  width: "300px",
-  height: "100%",
+var slideout;
+window.addEventListener("resize", function () {
+  if (window.innerWidth >= 769) {
+    document.querySelector(".main").classList.add("remove-push-content");
+    if (slideout) slideout.destroy();
+  }
+  if (window.innerWidth <= 768) {
+    document.querySelector(".main").classList.remove("remove-push-content");
+    slideout = new Slideout({
+      panel: document.querySelector(".main"),
+      menu: document.querySelector(".mobileMenu"),
+      padding: 250,
+      tolerance: 70,
+    });
+  }
 });
 
-// Promise resolves once menu is open
-// var openPromise = myMenu.open();
+if (window.innerWidth <= 768) {
+  slideout = new Slideout({
+    panel: document.querySelector(".main"),
+    menu: document.querySelector(".mobileMenu"),
+    padding: 250,
+    tolerance: 70,
+  });
+}
+
+toggleMenu = () => {
+  slideout.toggle();
+};
