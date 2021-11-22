@@ -90,6 +90,13 @@ $font-red: #d34e56;
   background: $primary-blue;
   color: $font-white;
 }
+.primary-button {
+  background: $primary-blue !important;
+  color: $font-white !important;
+  &:hover {
+    background: $primary-dark !important;
+  }
+}
 
 .fs-7 {
   font-size: 14px;
@@ -180,12 +187,12 @@ body {
 // Main Body
 .main {
   height: 100%;
-
   // Desktop Menu
   .desktopMenu {
     background: $primary-dark;
     height: 100%;
     width: 250px;
+    position: fixed;
     @include medium {
       display: none;
     }
@@ -205,9 +212,12 @@ body {
   // Main content
   .content {
     width: calc(100% - 250px);
+    margin-left: 250px;
     background: $primary-gray;
+    overflow-y: scroll;
     @include medium {
       width: 100%;
+      margin-left: 0;
     }
     // Top Navigation Bar
     .mobilemenuicon {
@@ -228,5 +238,24 @@ body {
         object-fit: cover;
       }
     }
+    .contentItems {
+      width: 98%;
+      margin-left: 1%;
+    }
+  }
+}
+
+// Log in Page
+
+.loginBackground {
+  background: $primary-dark;
+  width: 100%;
+  height: 100%;
+  .loginCard {
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

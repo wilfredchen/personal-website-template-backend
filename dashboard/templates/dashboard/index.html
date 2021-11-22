@@ -1,118 +1,23 @@
-{% load sass_tags static %}
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
 
-<html lang="en">
+{% block content %}
+<h3>About Me</h3>
+<div class="row">
+  <div class="col col-12 col-lg-6">
+    <div class="card p-5">
+      {% for field in userEditForm%}
+      <div class="control-group">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="{% sass_src 'styles/main.scss' %}" rel="stylesheet" type="text/css" />
-  <link href="{% static 'styles/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
-  <title>Admin Dashboard</title>
-</head>
+        {{ field|as_crispy_field }}
 
-<body>
-
-  <div class="mobileMenu">
-    <div class="logoContainer">
-      <p class="fs-5 fw-bold text-white text-center pt-3">DASHBoard</p>
-    </div>
-    <div class="navContainer">
-      <p class="fs-8 text-muted pt-3 ps-3">Navigations</p>
-      <div class="ms-2 me-2 d-flex flex-row align-items-center navItem pb-2">
-        <i class="fas fa-user icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">About</div>
       </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <i class="fas fa-briefcase icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">Experiences</div>
-      </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <i class="fas fa-graduation-cap icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">Education</div>
-      </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <i class="fas fa-award icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">Certificates</div>
-      </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <i class="fas fa-cogs icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">Skills</div>
-      </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <i class="fas fa-scroll icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">Portfolio</div>
-      </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <i class="fas fa-tags icon-focus ms-2"></i>
-        <div class="fs-7 ps-3 font-gray">Tags</div>
-      </div>
+      {% endfor %}
     </div>
   </div>
-
-  <div class="main d-flex">
-
-    <div class="desktopMenu">
-      <div class="logoContainer">
-        <p class="fs-5 fw-bold text-white text-center pt-3">DASHBoard</p>
-      </div>
-      <div class="navContainer">
-        <p class="fs-8 text-muted pt-3 ps-3">Navigations</p>
-        <div class="ms-2 me-2 d-flex flex-row align-items-center navItem pb-2">
-          <i class="fas fa-user icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">About</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <i class="fas fa-briefcase icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">Experiences</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <i class="fas fa-graduation-cap icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">Education</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <i class="fas fa-award icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">Certificates</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <i class="fas fa-cogs icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">Skills</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <i class="fas fa-scroll icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">Portfolio</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <i class="fas fa-tags icon-focus ms-2"></i>
-          <div class="fs-7 ps-3 font-gray">Tags</div>
-        </div>
-      </div>
+  <div class=" col col-12 col-lg-6">
+    <div class="card">
     </div>
-
-    <div class="content">
-
-      <div class="topNavContainer border-rounded mt-3 d-flex flex-row align-items-center justify-content-between">
-        <div class="ms-4">
-          <i class="fas fa-bars fs-5 mobileMenuIcon" onclick="toggleMenu()"></i>
-        </div>
-        <div class="d-flex flex-row justify-content-between align-items-center">
-          <div>
-            <i class="fas fa-sign-out-alt fs-4 me-3"></i>
-          </div>
-          <div>
-            <img src="https://wilfredchen.com/images/1610441907.jpg" class="profileImg me-4">
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
-
-</body>
-
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/slideout.min.js' %}"></script>
-<script src="{% static 'js/script.js' %}"></script>
-<script src="https://kit.fontawesome.com/7219a1190c.js" crossorigin="anonymous"></script>
-
-</html>
+</div>
+{% endblock %}
