@@ -10,7 +10,7 @@ class User(AbstractUser):
   bio1 = models.TextField(null=True)
   bio2 = models.TextField(null=True)
   profile_photo = models.ImageField(null=True)
-  phone = models.IntegerField(null=True)
+  phone = models.CharField(max_length=200, null=True)
   linkedin_url = models.TextField(null=True)
   facebook_url = models.TextField(null=True)
   twitter_url = models.TextField(null=True)

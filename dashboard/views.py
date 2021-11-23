@@ -25,7 +25,17 @@ def loginPage(request):
 
 @login_required(login_url = 'login')
 def homePage(request):
-  userEditForm = UserEditForm()
+  user = request.user
+  print(user)
+  userEditForm = UserEditForm(instance=user)
+  
+  if request.method == 'POST':
+    if "update_user_info" in request.POST:
+      userEditForm = UserEditForm(request.POST, instance=user)
+      if userEditForm.is_valid():
+        userEditForm.save()
+        return redirect('home')
+  
   context = {'userEditForm': userEditForm}
   return render(request, 'dashboard/index.html', context)
 

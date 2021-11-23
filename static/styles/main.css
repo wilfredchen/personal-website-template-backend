@@ -39,7 +39,7 @@
   font-size: 12px; }
 
 .border-rounded {
-  border-radius: 12px; }
+  border-radius: 12px !important; }
 
 /*============================*/
 /*=======Content Start========*/
@@ -153,8 +153,5 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
-
-.card {
-  border-radius: 12 !important; }
 
 /*# sourceMappingURL=main.css.map */

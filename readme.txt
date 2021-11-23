@@ -1,3 +1,7 @@
 packpages requires 
 
-pip install libsass django-compressor django-sass-processor
+pip3 install libsass django-compressor django-sass-processor
+
+pip3 install mysqlconfig
+
+pip3 install django-widget-tweaks
