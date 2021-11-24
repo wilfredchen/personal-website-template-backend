@@ -46,6 +46,7 @@ $primary-gray: #e7f3fa;
 $secondary-gray: #aaaaaa;
 $primary-white: #ffffff;
 $primary-blue: #2096f3;
+$primary-blue-light: #4baefa;
 
 $font-white: #fff;
 $font-dark: #222;
@@ -94,7 +95,7 @@ $font-red: #d34e56;
   background: $primary-blue !important;
   color: $font-white !important;
   &:hover {
-    background: $primary-dark !important;
+    background: $primary-blue-light !important;
   }
 }
 
@@ -109,7 +110,12 @@ $font-red: #d34e56;
 .border-rounded {
   border-radius: 12px !important;
 }
-
+.a-links {
+  color: $primary-blue !important;
+  &:hover {
+    color: $primary-blue-light !important;
+  }
+}
 /*============================*/
 /*=======Content Start========*/
 /*============================*/
@@ -215,6 +221,7 @@ body {
     margin-left: 250px;
     background: $primary-gray;
     overflow-y: scroll;
+    padding-bottom: 20px;
     @include medium {
       width: 100%;
       margin-left: 0;
@@ -246,7 +253,6 @@ body {
 }
 
 // Log in Page
-
 .loginBackground {
   background: $primary-dark;
   width: 100%;
@@ -258,4 +264,14 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+// Home Page
+.profilePhoto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+  object-position: center;
 }

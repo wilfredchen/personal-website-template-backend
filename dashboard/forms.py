@@ -1,9 +1,8 @@
 from django.forms import ModelForm
 from django import forms
 from .models import User
-from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
 
+# General User Info Form
 class UserEditForm(forms.Form, ModelForm):
   name = forms.CharField(
     widget = forms.TextInput(attrs={'placeholder': 'Yoshida'}),
@@ -53,12 +52,52 @@ class UserEditForm(forms.Form, ModelForm):
 
   def clean(self):
     cleaned_data = super(UserEditForm, self).clean()
-    # name = cleaned_data.get("name")
-    # email = cleaned_data.get("email")
-    # if len(name) > 250:
-    #   self.add_error('name', "Why your name so long")
     return cleaned_data
 
 
-  
+# Password Update Form
+class PasswordUpdateForm(forms.Form, ModelForm):
+  current_password = forms.CharField(
+    widget = forms.PasswordInput(attrs={'placeholder': 'Current Password'}),
+    label = "Current Password",
+    required = True
+  )
+  password = forms.CharField(
+    widget = forms.PasswordInput(attrs={'placeholder': 'New Password'}),
+    label = "New Password",
+    required = True
+  )
+  confirm_password = forms.CharField(
+    widget = forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+    label = "Confirm Password",
+    required = True
+  )
 
+  class Meta:
+    model = User
+    fields = ['password']
+  
+  field_order = ['current_password', 'password', 'confirm_password']  
+  
+  def clean(self):
+    cleaned_data = super(PasswordUpdateForm, self).clean()
+    password = cleaned_data.get("password")
+    confirm_password = cleaned_data.get("confirm_password")
+    if (password is not None and len(password) < 6):
+      self.add_error("password", "Password cannot be less than 6 character.")
+    if(password != confirm_password):
+      self.add_error("confirm_password","Password and confirm password cannot be different.")
+    return cleaned_data
+  
+  
+# Profile Photo Update
+class ProfilePhotoForm(forms.Form, ModelForm):
+  profile_photo = forms.FileField(
+    label = "Profile Photo",
+    required = True
+  )
+  
+  class Meta:
+    model = User
+    fields = ['profile_photo']
+    

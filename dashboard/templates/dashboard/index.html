@@ -1,16 +1,53 @@
 {% extends 'main.html' %}
-{% load widget_tweaks %}
+{% load widget_tweaks static %}
 {% block content %}
 <h3 class="pt-2 pb-2">About Me</h3>
 <div class="row">
-  <div class="col col-12 col-lg-6">
+  <div class="col col-12 col-xl-6">
+    <!--Profile Photo Update-->
+    <div class="card p-5 border-rounded mb-3">
+      <p class="fs-6 fw-bold">Update Profile Photo</p>
+      {% if profile_photo is None %}
+      <div class="text-center">
+        <img src="{% get_static_prefix %}{{ defaultImg }}" class="profilePhoto" />
+      </div>
+      {% else %}
+      <div class="text-center">
+        <img src="{% get_static_prefix %}{{request.user.profile_photo.url}}" class="profilePhoto" />
+      </div>
+      {% endif %}
+      <form action="" method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% for field in profilePhotoForm %}
+        <div class="mb-3">
+          <label class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
+            {% endif %}
+          </label>
+          {% if field.errors %}
+          {% render_field field class="form-control is-invalid" %}
+          {% for error in field.errors %}
+          <div class="invalid-feedback">
+            {{ error }}
+          </div>
+          {% endfor %}
+          {% else %}
+          {% render_field field class="form-control" %}
+          {% endif %}
+        </div>
+        {% endfor %}
+        <div class="text-end">
+          <input type="submit" name="update_profile_photo" value="Update" class="btn primary-button mb-3" />
+        </div>
+      </form>
+    </div>
+    <!--General Card-->
     <div class="card p-5 border-rounded">
       <p class="fs-6 fw-bold">General Info</p>
       <form action="" method="POST" novalidate>
         {% csrf_token %}
         {% for field in userEditForm %}
         <div class="mb-3">
-          <label for="email" class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
+          <label class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
             {% endif %}
           </label>
           {% if field.errors %}
@@ -32,7 +69,47 @@
     </div>
   </div>
   <div class=" col col-12 col-lg-6">
-    <div class="card">
+    <!--Password Change-->
+    <div class="card p-5 border-rounded">
+      <p class="fs-6 fw-bold">Password Update</p>
+      <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {% for field in passwordUpdateForm %}
+        <div class="mb-3">
+          <label class="form-label font-dark-gray">{{field.label_tag}} {% if field.field.required %} *
+            {% endif %}</label>
+          {% if field.errors %}
+          {% render_field field class="form-control is-invalid" %}
+          {% for error in field.errors %}
+          <div class="invalid-feedback">
+            {{ error }}
+          </div>
+          {% endfor %}
+          {% else %}
+          {% render_field field class="form-control" %}
+          {% endif %}
+        </div>
+        {% endfor %}
+
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="text-danger">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="text-success">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <div class="text-end">
+          <input type="submit" name="update_user_password" value="Update" class="btn primary-button mb-3" />
+        </div>
+      </form>
     </div>
   </div>
 </div>

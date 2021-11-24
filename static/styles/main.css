@@ -30,7 +30,7 @@
   background: #2096f3 !important;
   color: #fff !important; }
   .primary-button:hover {
-    background: #303640 !important; }
+    background: #4baefa !important; }
 
 .fs-7 {
   font-size: 14px; }
@@ -40,6 +40,11 @@
 
 .border-rounded {
   border-radius: 12px !important; }
+
+.a-links {
+  color: #2096f3 !important; }
+  .a-links:hover {
+    color: #4baefa !important; }
 
 /*============================*/
 /*=======Content Start========*/
@@ -119,7 +124,8 @@ body {
     width: calc(100% - 250px);
     margin-left: 250px;
     background: #e7f3fa;
-    overflow-y: scroll; }
+    overflow-y: scroll;
+    padding-bottom: 20px; }
     @media (max-width: 768px) {
       .main .content {
         width: 100%;
@@ -153,5 +159,13 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
+
+.profilePhoto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+  object-position: center; }
 
 /*# sourceMappingURL=main.css.map */
