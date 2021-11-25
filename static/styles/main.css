@@ -46,6 +46,9 @@
   .a-links:hover {
     color: #4baefa !important; }
 
+.navLink {
+  text-decoration: none; }
+
 /*============================*/
 /*=======Content Start========*/
 /*============================*/

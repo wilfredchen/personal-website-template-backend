@@ -19,18 +19,22 @@
     </div>
     <div class="navContainer">
       <p class="fs-8 text-muted pt-3 ps-3">Navigations</p>
-      <div class="ms-2 me-2 d-flex flex-row align-items-center navItem pb-2">
-        <div style="width: 30px;">
-          <i class="fas fa-user icon-focus ms-2 mt-1"></i>
+      <a href="{% url 'home' %}" class="navLink">
+        <div class="ms-2 me-2 d-flex flex-row align-items-center navItem pb-2">
+          <div style="width: 30px;">
+            <i class="fas fa-user icon-focus ms-2 mt-1"></i>
+          </div>
+          <div class="fs-7 ps-3 mt-1 font-gray mt-1">About</div>
         </div>
-        <div class="fs-7 ps-3 mt-1 font-gray mt-1">About</div>
-      </div>
-      <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-        <div style="width: 30px;">
-          <i class="fas fa-briefcase icon-focus ms-2"></i>
+      </a>
+      <a href="{% url 'experiences' %}" class="navLink">
+        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
+          <div style="width: 30px;">
+            <i class="fas fa-briefcase icon-focus ms-2"></i>
+          </div>
+          <div class="fs-7 ps-3 font-gray">Experiences</div>
         </div>
-        <div class="fs-7 ps-3 font-gray">Experiences</div>
-      </div>
+      </a>
       <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
         <div style="width: 30px;">
           <i class="fas fa-graduation-cap icon-focus ms-2"></i>
@@ -72,18 +76,22 @@
       </div>
       <div class="navContainer">
         <p class="fs-8 text-muted pt-3 ps-3">Navigations</p>
-        <div class="ms-2 me-2 d-flex flex-row align-items-center navItem pb-2">
-          <div style="width: 30px;">
-            <i class="fas fa-user icon-focus ms-2 fs-6 mt-1"></i>
+        <a href="{% url 'home' %}" class="navLink">
+          <div class="ms-2 me-2 d-flex flex-row align-items-center navItem pb-2">
+            <div style="width: 30px;">
+              <i class="fas fa-user icon-focus ms-2 fs-6 mt-1"></i>
+            </div>
+            <div class="fs-7 ps-3 mt-1 font-gray">About</div>
           </div>
-          <div class="fs-7 ps-3 mt-1 font-gray">About</div>
-        </div>
-        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
-          <div style="width: 30px;">
-            <i class="fas fa-briefcase icon-focus ms-2 fs-6"></i>
+        </a>
+        <a href="{% url 'experiences' %}" class="navLink">
+          <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
+            <div style="width: 30px;">
+              <i class="fas fa-briefcase icon-focus ms-2 fs-6"></i>
+            </div>
+            <div class="fs-7 ps-3 font-gray">Experiences</div>
           </div>
-          <div class="fs-7 ps-3 font-gray">Experiences</div>
-        </div>
+        </a>
         <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
           <div style="width: 30px;">
             <i class="fas fa-graduation-cap icon-focus ms-2 fs-6"></i>
@@ -129,9 +137,15 @@
               <i class="fas fa-sign-out-alt fs-4 me-3"></i>
             </div>
           </a>
+          {% if not request.user.profile_photo or request.user.profile_photo is None %}
+          <div>
+            <img src="{% get_static_prefix %}{{ 'images/profile1.jpg' }}" class="profileImg me-4" />
+          </div>
+          {% else %}
           <div>
             <img src="{% get_static_prefix %}{{request.user.profile_photo.url}}" class="profileImg me-4" />
           </div>
+          {% endif %}
         </div>
       </div>
 

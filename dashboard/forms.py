@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import User
+from .models import Experiences, User
 
 # General User Info Form
 class UserEditForm(forms.Form, ModelForm):
@@ -83,10 +83,10 @@ class PasswordUpdateForm(forms.Form, ModelForm):
     cleaned_data = super(PasswordUpdateForm, self).clean()
     password = cleaned_data.get("password")
     confirm_password = cleaned_data.get("confirm_password")
-    if (password is not None and len(password) < 6):
+    if password is not None and len(password) < 6:
       self.add_error("password", "Password cannot be less than 6 character.")
-    if(password != confirm_password):
-      self.add_error("confirm_password","Password and confirm password cannot be different.")
+    if password != confirm_password:
+      self.add_error("confirm_password", "Password and confirm password cannot be different.")
     return cleaned_data
   
   
@@ -100,4 +100,40 @@ class ProfilePhotoForm(forms.Form, ModelForm):
   class Meta:
     model = User
     fields = ['profile_photo']
+ 
+    
+# Add Experiences Form
+class AddExperiencesForm(forms.Form, ModelForm):
+  year = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': '2019 - 2021'}),
+    label = "Year",
+    required = True
+  )
+  title = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Software Engineer'}),
+    label = "Job Title",
+    required = True
+  )
+  company = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Google'}),
+    label = "Company Name",
+    required = True
+  )
+  short_desc = forms.CharField(
+    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about what you do at your job'}),
+    label = "Short Description",
+    help_text = "Limited to 300 characters",
+    required = False
+  )
+  
+  class Meta:
+    model = Experiences
+    fields = ['year', 'title', 'company', 'short_desc']
+  
+  def clean(self):
+    cleaned_data = super(AddExperiencesForm, self).clean()
+    short_desc = cleaned_data.get("short_desc")
+    if short_desc is not None and len(short_desc) > 300:
+      self.add_error("short_desc", "Your short description is turning into an essay.")
+    return cleaned_data
     

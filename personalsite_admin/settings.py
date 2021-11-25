@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     
     'sass_processor',
     'widget_tweaks',
+    'django_cleanup.apps.CleanupConfig',
+    
     'dashboard.apps.DashboardConfig',
 ]
 

@@ -27,3 +27,10 @@ if (window.innerWidth <= 768) {
 toggleMenu = () => {
   slideout.toggle();
 };
+
+// Confirm Delete
+confirmDelete = (title) => {
+  var agree = confirm(`Are you sure you want to delete ${title}?`);
+  if (agree) return true;
+  else return false;
+};

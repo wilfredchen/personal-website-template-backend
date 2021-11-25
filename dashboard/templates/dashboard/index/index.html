@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+{% load widget_tweaks static %}
+{% block content %}
+<h3 class="pt-2 pb-2">About Me</h3>
+<div class="row">
+  <div class="col col-12 col-xl-6">
+    <!--Profile Photo Update-->
+    {% include 'dashboard/index/updateProfilePhoto.html' %}
+    <!--General About Me Update-->
+    {% include 'dashboard/index/updateAboutMe.html' %}
+  </div>
+  <div class=" col col-12 col-lg-6">
+    <!--Update Password-->
+    {% include 'dashboard/index/updatePassword.html' %}
+  </div>
+</div>
+{% endblock %}
