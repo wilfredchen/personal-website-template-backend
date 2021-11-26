@@ -1,9 +1,9 @@
 {% load widget_tweaks static %}
 <div class="card p-5 border-rounded">
-  <p class="fs-6 fw-bold">General Info</p>
+  <p class="fs-6 fw-bold">Add New Educations</p>
   <form action="" method="POST" novalidate>
     {% csrf_token %}
-    {% for field in userEditForm %}
+    {% for field in addEduForm %}
     <div class="mb-3">
       <label class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
         {% endif %}
@@ -18,10 +18,13 @@
       {% else %}
       {% render_field field class="form-control" %}
       {% endif %}
+      {% if field.help_text %}
+      <div class="form-text">{{ field.help_text }}</div>
+      {% endif %}
     </div>
     {% endfor %}
     <div class="text-end">
-      <input type="submit" name="update_user_info" value="Update" class="btn primary-button mb-3" />
+      <input type="submit" value="Add" name="add_edu" class="btn primary-button mb-3" />
     </div>
   </form>
 </div>

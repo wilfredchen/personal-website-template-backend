@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import UserEditForm, PasswordUpdateForm, ProfilePhotoForm, AddExperiencesForm
-from .models import Experiences
+from .forms import UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm
+from .models import Experiences, Education
 import random
 # Create your views here.
 
-#login model
+#login
 def loginPage(request):
   if request.user.is_authenticated:
     return redirect('home')
@@ -25,13 +25,13 @@ def loginPage(request):
   return render(request, 'dashboard/login.html', context)
 
 
-#logout model
+#logout
 def logOutUser(request):
   logout(request)
   return redirect('home')
 
 
-#home page model
+#home page
 @login_required(login_url = 'login')
 def homePage(request):
   user = request.user
@@ -69,15 +69,15 @@ def homePage(request):
   return render(request, 'dashboard/index/index.html', context)
 
 
-#experiences page model
+#Experiences page
 @login_required(login_url = 'login')
 def experiencesPage(request):
-  addExpForm = AddExperiencesForm()
+  addExpForm = ExperiencesForm()
   experiences = Experiences.objects.all()
   
   if request.method == 'POST':
     if "add_exp" in request.POST:
-      addExpForm = AddExperiencesForm(request.POST)
+      addExpForm = ExperiencesForm(request.POST)
       if addExpForm.is_valid():
         addExpForm.save()
         return redirect('experiences')
@@ -88,4 +88,58 @@ def experiencesPage(request):
       return redirect('experiences')
   
   context={'addExpForm': addExpForm, 'experiences': experiences}
-  return render(request, 'dashboard/experiences.html', context)
+  return render(request, 'dashboard/experiences/experiences.html', context)
+
+
+#Update experience page
+@login_required(login_url = 'login')
+def updateExperiencesPage(request, pk):
+  experiences = Experiences.objects.get(id=pk)
+  updateExpForm = ExperiencesForm(instance=experiences)
+  
+  if request.method == 'POST':
+    updateExpForm = ExperiencesForm(request.POST, instance=experiences)
+    if updateExpForm.is_valid():
+      updateExpForm.save()
+      return redirect('experiences')
+  
+  context={'updateExpForm': updateExpForm}
+  return render(request, 'dashboard/experiences/update_experiences.html', context)
+
+
+#Education page
+@login_required(login_url = 'login')
+def educationsPage(request):
+  addEduForm = EducationForm()
+  educations = Education.objects.all()
+  
+  if request.method == 'POST':
+    if "add_edu" in request.POST:
+      addEduForm = EducationForm(request.POST)
+      if addEduForm.is_valid():
+        addEduForm.save()
+        return redirect('educations')
+    
+    if "delete_edu" in request.POST:
+      edu = Education.objects.get(id=request.POST.get('eduId'))
+      edu.delete()
+      return redirect('educations')
+    
+  context={'addEduForm': addEduForm, 'educations': educations}
+  return render(request, 'dashboard/educations/educations.html', context)
+
+
+#Update educations page
+@login_required(login_url = 'login')
+def updateEducationsPage(request, pk):
+  educations = Education.objects.get(id=pk)
+  updateEduForm = EducationForm(instance=educations)
+  
+  if request.method == 'POST':
+    updateEduForm = EducationForm(request.POST, instance=educations)
+    if updateEduForm.is_valid():
+      updateEduForm.save()
+      return redirect('educations')
+  
+  context={'updateEduForm':updateEduForm}
+  return render(request, 'dashboard/educations/update_educations.html', context)

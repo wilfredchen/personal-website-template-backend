@@ -98,6 +98,13 @@ $font-red: #d34e56;
     background: $primary-blue-light !important;
   }
 }
+.secondary-button {
+  background: $primary-dark !important;
+  color: $font-white !important;
+  &:hover {
+    background: $secondary-dark !important;
+  }
+}
 
 .fs-7 {
   font-size: 14px;
@@ -241,6 +248,10 @@ body {
       width: 98%;
       height: 70px;
       margin-left: 1%;
+      @include medium {
+        width: 95%;
+        margin-left: 2.5%;
+      }
       .profileImg {
         border-radius: 50%;
         width: 55px;
@@ -251,6 +262,10 @@ body {
     .contentItems {
       width: 98%;
       margin-left: 1%;
+      @include medium {
+        width: 95%;
+        margin-left: 2.5%;
+      }
     }
   }
 }

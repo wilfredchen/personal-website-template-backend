@@ -1,0 +1,44 @@
+ <div class="card p-5 border-rounded">
+   <p class="fs-6 fw-bold">Current Experiences</p>
+   <div class="table-responsive">
+     <table class="table table-striped">
+       <thead>
+         <tr>
+           <th scope="col">Year</th>
+           <th scope="col">Title</th>
+           <th scope="col">Company</th>
+           <th scope="col">Short Description</th>
+           <th scope="col">Edit</th>
+           <th scope="col">Delete</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% for experience in experiences %}
+         <tr>
+           <td>{{experience.year}}</td>
+           <td>{{experience.title}}</td>
+           <td>{{experience.company}}</td>
+           <td>{{experience.short_desc}}</td>
+           <td>
+             <a href="{% url 'update-experiences' experience.id %}">
+               <button type="button" class="btn primary-button"><i class="far fa-edit"></i></button>
+             </a>
+           </td>
+           <td>
+             <form action="" method="POST" onsubmit="return confirmDelete('{{ experience.title }}')">
+               {% csrf_token %}
+               <input type="hidden" name="expId" value="{{experience.id}}">
+               <button type="submit" name="delete_exp" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+             </form>
+           </td>
+         </tr>
+         {% endfor %}
+         {% if not experiences %}
+         <tr>
+           <td colspan="6">No Data Yet</td>
+         </tr>
+         {% endif %}
+       </tbody>
+     </table>
+   </div>
+ </div>

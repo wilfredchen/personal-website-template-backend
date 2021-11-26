@@ -33,4 +33,16 @@ class Experiences(models.Model):
 
   def __str__(self):
     return self.short_desc[0:250] #return first 250 word characters only for short desc.
+
+
+class Education(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  year = models.CharField(max_length=250, null=False)
+  major = models.CharField(max_length=250, null=False)
+  school = models.CharField(max_length=250, null=False)
+  grade = models.CharField(max_length=250, null=False)
+  
+  class Meta:
+    ordering = ['-created_at']
   

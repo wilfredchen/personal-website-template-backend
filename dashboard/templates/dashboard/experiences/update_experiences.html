@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load widget_tweaks static %}
+{% block content %}
+<h3 class="pt-2 pb-2">Experiences / Update</h3>
+<div class="mb-3">
+  <a href="{% url 'experiences' %}">
+    <button type="button" class="btn secondary-button">Back</button>
+  </a>
+</div>
+<div class="row">
+  <div class="col col-12 col-xl-6">
+    <!--Add Experiences Form-->
+    <div class="card p-5 border-rounded">
+      <p class="fs-6 fw-bold">Update Existing Experiences</p>
+      <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {% for field in updateExpForm %}
+        <div class="mb-3">
+          <label class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
+            {% endif %}
+          </label>
+          {% if field.errors %}
+          {% render_field field class="form-control is-invalid" %}
+          {% for error in field.errors %}
+          <div class="invalid-feedback">
+            {{ error }}
+          </div>
+          {% endfor %}
+          {% else %}
+          {% render_field field class="form-control" %}
+          {% endif %}
+          {% if field.help_text %}
+          <div class="form-text">{{ field.help_text }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+        <div class="text-end">
+          <input type="submit" value="Update" class="btn primary-button mb-3" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

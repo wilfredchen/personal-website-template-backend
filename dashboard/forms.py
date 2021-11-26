@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Experiences, User
+from .models import Experiences, User, Education
 
 # General User Info Form
 class UserEditForm(forms.Form, ModelForm):
@@ -102,8 +102,8 @@ class ProfilePhotoForm(forms.Form, ModelForm):
     fields = ['profile_photo']
  
     
-# Add Experiences Form
-class AddExperiencesForm(forms.Form, ModelForm):
+# Add/Update Experiences Form
+class ExperiencesForm(forms.Form, ModelForm):
   year = forms.CharField(
     widget = forms.TextInput(attrs={'placeholder': '2019 - 2021'}),
     label = "Year",
@@ -131,9 +131,36 @@ class AddExperiencesForm(forms.Form, ModelForm):
     fields = ['year', 'title', 'company', 'short_desc']
   
   def clean(self):
-    cleaned_data = super(AddExperiencesForm, self).clean()
+    cleaned_data = super(ExperiencesForm, self).clean()
     short_desc = cleaned_data.get("short_desc")
     if short_desc is not None and len(short_desc) > 300:
       self.add_error("short_desc", "Your short description is turning into an essay.")
     return cleaned_data
-    
+
+  
+# Add/Update Education Form
+class EducationForm(forms.Form, ModelForm):
+  year = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': '2019 - 2021'}),
+    label = "Year",
+    required = True
+  )
+  major = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'BSc (Hons) Computing'}),
+    label = "Major",
+    required = True
+  )
+  school = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Oxford University'}),
+    label = "School/University",
+    required = True
+  )
+  grade = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'First Class Honor'}),
+    label = "Grade",
+    required = True
+  )
+  
+  class Meta:
+    model = Education
+    fields=['year', 'major', 'school', 'grade']

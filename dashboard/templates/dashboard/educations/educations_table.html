@@ -1,0 +1,44 @@
+ <div class="card p-5 border-rounded">
+   <p class="fs-6 fw-bold">Current Educations</p>
+   <div class="table-responsive">
+     <table class="table table-striped">
+       <thead>
+         <tr>
+           <th scope="col">Year</th>
+           <th scope="col">Major</th>
+           <th scope="col">School</th>
+           <th scope="col">Grade</th>
+           <th scope="col">Edit</th>
+           <th scope="col">Delete</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% for edu in educations %}
+         <tr>
+           <td>{{edu.year}}</td>
+           <td>{{edu.major}}</td>
+           <td>{{edu.school}}</td>
+           <td>{{edu.grade}}</td>
+           <td>
+             <a href="{% url 'update-educations' edu.id %}">
+               <button type="button" class="btn primary-button"><i class="far fa-edit"></i></button>
+             </a>
+           </td>
+           <td>
+             <form action="" method="POST" onsubmit="return confirmDelete('{{ edu.major }}')">
+               {% csrf_token %}
+               <input type="hidden" name="eduId" value="{{edu.id}}">
+               <button type="submit" name="delete_edu" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+             </form>
+           </td>
+         </tr>
+         {% endfor %}
+         {% if not educations %}
+         <tr>
+           <td colspan="6">No Data Yet</td>
+         </tr>
+         {% endif %}
+       </tbody>
+     </table>
+   </div>
+ </div>

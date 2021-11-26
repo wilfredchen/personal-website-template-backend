@@ -32,6 +32,12 @@
   .primary-button:hover {
     background: #4baefa !important; }
 
+.secondary-button {
+  background: #303640 !important;
+  color: #fff !important; }
+  .secondary-button:hover {
+    background: #3e444d !important; }
+
 .fs-7 {
   font-size: 14px; }
 
@@ -143,6 +149,10 @@ body {
       width: 98%;
       height: 70px;
       margin-left: 1%; }
+      @media (max-width: 768px) {
+        .main .content .topNavContainer {
+          width: 95%;
+          margin-left: 2.5%; } }
       .main .content .topNavContainer .profileImg {
         border-radius: 50%;
         width: 55px;
@@ -151,7 +161,10 @@ body {
     .main .content .contentItems {
       width: 98%;
       margin-left: 1%; }
-
+      @media (max-width: 768px) {
+        .main .content .contentItems {
+          width: 95%;
+          margin-left: 2.5%; } }
 .loginBackground {
   background: #303640;
   width: 100%;
