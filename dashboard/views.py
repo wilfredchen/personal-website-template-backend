@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm
-from .models import Experiences, Education
+from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm
+from .models import Experiences, Education, Certificates, Skills
 import random
 # Create your views here.
 
@@ -143,3 +143,79 @@ def updateEducationsPage(request, pk):
   
   context={'updateEduForm':updateEduForm}
   return render(request, 'dashboard/educations/update_educations.html', context)
+
+
+#Certificate Page
+@login_required(login_url = 'login')
+def certificatePage(request):
+  addCertiForm = CertificateForm()
+  certificates = Certificates.objects.all()
+  
+  if request.method == 'POST':
+    if "add_certi" in request.POST:
+      addCertiForm = CertificateForm(request.POST)
+      if addCertiForm.is_valid():
+        addCertiForm.save()
+        return redirect('certificates')
+    
+    if "delete_certi" in request.POST:
+      certi = Certificates.objects.get(id=request.POST.get('certiId'))
+      certi.delete()
+      return redirect('certificates')
+  
+  context={'addCertiForm': addCertiForm, 'certificates': certificates}
+  return render(request, 'dashboard/certi/certificates.html', context)
+
+
+#Update certificate page
+@login_required(login_url = 'login')
+def updateCertificatePage(request, pk):
+  certificates = Certificates.objects.get(id=pk)
+  updateCertiForm = CertificateForm(instance=certificates)
+  
+  if request.method == 'POST':
+    updateCertiForm = CertificateForm(request.POST, instance=certificates)
+    if updateCertiForm.is_valid():
+      updateCertiForm.save()
+      return redirect('certificates')
+    
+  context={'updateCertiForm': updateCertiForm}
+  return render(request, 'dashboard/certi/update_certificates.html', context)
+
+
+#Skills Page
+@login_required(login_url = 'login')
+def skillPage(request):
+  addSkillForm = SkillForm()
+  skills = Skills.objects.all()
+  
+  if request.method == 'POST':
+    if "add_skill" in request.POST:
+      addSkillForm = SkillForm(request.POST)
+      if addSkillForm.is_valid():
+        addSkillForm.save()
+        return redirect('skills')
+    
+    if "delete_skill" in request.POST:
+      skills = Skills.objects.get(id=request.POST.get('skillId'))
+      skills.delete()
+      return redirect('skills')
+  
+  context={'addSkillForm': addSkillForm, 'skills': skills}
+  return render(request, 'dashboard/skills/skills.html', context)
+
+
+#Update skills page
+@login_required(login_url = 'login')
+def updateSkillPage(request, pk):
+  skills = Skills.objects.get(id=pk)
+  updateSkillForm = SkillForm(instance=skills)
+  
+  if request.method == 'POST':
+    updateSkillForm = SkillForm(request.POST, instance=skills)
+    if updateSkillForm.is_valid():
+      updateSkillForm.save()
+      return redirect('skills')
+    
+  context={'updateSkillForm': updateSkillForm}
+  return render(request, 'dashboard/skills/update_skills.html', context)

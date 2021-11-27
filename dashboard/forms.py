@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Experiences, User, Education
+from .models import Certificates, Experiences, Skills, User, Education
 
 # General User Info Form
 class UserEditForm(forms.Form, ModelForm):
@@ -137,7 +137,7 @@ class ExperiencesForm(forms.Form, ModelForm):
       self.add_error("short_desc", "Your short description is turning into an essay.")
     return cleaned_data
 
-  
+
 # Add/Update Education Form
 class EducationForm(forms.Form, ModelForm):
   year = forms.CharField(
@@ -164,3 +164,49 @@ class EducationForm(forms.Form, ModelForm):
   class Meta:
     model = Education
     fields=['year', 'major', 'school', 'grade']
+
+
+#Add/Update Certificate Form
+class CertificateForm(forms.Form, ModelForm):
+  year = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': '2019 - 2021'}),
+    label = "Year",
+    required = True
+  )
+  title = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Python for machine learning'}),
+    label = "Certificate Name",
+    required = True
+  )
+  award_body = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Udemy'}),
+    label = "Awarding Body",
+    required = True
+  )
+  url = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'link to your certificate online'}),
+    label = "Url",
+    required = False
+  )
+  
+  class Meta:
+    model = Certificates
+    fields = ['year', 'title', 'award_body', 'url']
+
+
+#Add/Update Skill Form
+class SkillForm(forms.Form, ModelForm):
+  name = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Javascript'}),
+    label = "Name",
+    required = True
+  )
+  percentage = forms.IntegerField(
+    widget = forms.NumberInput(attrs={'placeholder': '80'}),
+    label = "Percentage",
+    required = True
+  )
+
+  class Meta:
+    model = Skills
+    fields = ['name', 'percentage']

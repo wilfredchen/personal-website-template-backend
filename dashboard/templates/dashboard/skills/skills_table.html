@@ -1,42 +1,38 @@
  <div class="card p-5 border-rounded">
-   <p class="fs-6 fw-bold">Current Experiences</p>
+   <p class="fs-6 fw-bold">Current Skills</p>
    <div class="table-responsive">
      <table class="table table-striped align-middle">
        <thead>
          <tr>
-           <th scope="col">Year</th>
-           <th scope="col">Title</th>
-           <th scope="col">Company</th>
-           <th scope="col">Short Description</th>
+           <th scope="col">Name</th>
+           <th scope="col">Percentage</th>
            <th scope="col">Edit</th>
            <th scope="col">Delete</th>
          </tr>
        </thead>
        <tbody>
-         {% for experience in experiences %}
+         {% for skill in skills %}
          <tr>
-           <td>{{experience.year}}</td>
-           <td>{{experience.title}}</td>
-           <td>{{experience.company}}</td>
-           <td>{{experience.short_desc}}</td>
+           <td>{{skill.name}}</td>
+           <td>{{skill.percentage}} &percnt;</td>
            <td>
-             <a href="{% url 'update-experiences' experience.id %}">
+             <a href="{% url 'update-skill' skill.id %}">
                <button type="button" class="btn primary-button"><i class="far fa-edit"></i></button>
              </a>
            </td>
            <td>
              <div class="mt-3">
-               <form action="" method="POST" onsubmit="return confirmDelete('{{ experience.title }}')">
+               <form action="" method="POST" onsubmit="return confirmDelete('{{ skill.title }}')">
                  {% csrf_token %}
-                 <input type="hidden" name="expId" value="{{experience.id}}">
-                 <button type="submit" name="delete_exp" class="btn btn-danger"><i
+                 <input type="hidden" name="skillId" value="{{skill.id}}">
+                 <button type="submit" name="delete_skill" class="btn btn-danger"><i
                      class="far fa-trash-alt"></i></button>
                </form>
              </div>
            </td>
          </tr>
          {% endfor %}
-         {% if not experiences %}
+         {% if not skills %}
          <tr>
            <td colspan="6">No Data Yet</td>
          </tr>

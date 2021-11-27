@@ -32,7 +32,7 @@ class Experiences(models.Model):
     ordering = ['-created_at']
 
   def __str__(self):
-    return self.short_desc[0:250] #return first 250 word characters only for short desc.
+    return self.short_desc[0:300] #return first 300 word characters only for short desc.
 
 
 class Education(models.Model):
@@ -45,4 +45,25 @@ class Education(models.Model):
   
   class Meta:
     ordering = ['-created_at']
+
+
+class Certificates(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  year = models.CharField(max_length=250, null=False)
+  title = models.CharField(max_length=250, null=False)
+  award_body = models.CharField(max_length=250, null=False)
+  url = models.TextField(null=True)
   
+  class Meta:
+    ordering = ['-created_at']
+
+
+class Skills(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  name = models.CharField(max_length=250, null = False)
+  percentage = models.IntegerField(null = False)
+  
+  class Meta:
+    ordering = ['-created_at']

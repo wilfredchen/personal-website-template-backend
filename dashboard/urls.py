@@ -9,4 +9,8 @@ urlpatterns = [
   path('experiences/update/<str:pk>', views.updateExperiencesPage, name="update-experiences"),
   path('educations/', views.educationsPage, name="educations"),
   path('educations/update/<str:pk>', views.updateEducationsPage, name="update-educations"),
+  path('certificates/', views.certificatePage, name="certificates"),
+  path('certificates/update/<str:pk>', views.updateCertificatePage, name="update-certificate"),
+  path('skills/', views.skillPage, name="skills"),
+  path('skills/update/<str:pk>', views.updateSkillPage, name="update-skill"),
   ]

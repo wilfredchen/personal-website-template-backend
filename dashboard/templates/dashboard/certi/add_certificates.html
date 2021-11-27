@@ -1,0 +1,30 @@
+{% load widget_tweaks static %}
+<div class="card p-5 border-rounded">
+  <p class="fs-6 fw-bold">Add New Certificates</p>
+  <form action="" method="POST" novalidate>
+    {% csrf_token %}
+    {% for field in addCertiForm %}
+    <div class="mb-3">
+      <label class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
+        {% endif %}
+      </label>
+      {% if field.errors %}
+      {% render_field field class="form-control is-invalid" %}
+      {% for error in field.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {% render_field field class="form-control" %}
+      {% endif %}
+      {% if field.help_text %}
+      <div class="form-text">{{ field.help_text }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <div class="text-end">
+      <input type="submit" value="Add" name="add_certi" class="btn primary-button mb-3" />
+    </div>
+  </form>
+</div>
