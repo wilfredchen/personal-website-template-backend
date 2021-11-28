@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm
-from .models import Experiences, Education, Certificates, Skills
+from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm
+from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios
 import random
 # Create your views here.
 
@@ -219,3 +219,99 @@ def updateSkillPage(request, pk):
     
   context={'updateSkillForm': updateSkillForm}
   return render(request, 'dashboard/skills/update_skills.html', context)
+
+
+#Tags Page
+@login_required(login_url = 'login')
+def tagPage(request):
+  addTagForm = TagForm()
+  tags = Tags.objects.all()
+  
+  if request.method == 'POST':
+    if "add_tag" in request.POST:
+      addTagForm = TagForm(request.POST)
+      if addTagForm.is_valid():
+        addTagForm.save()
+        return redirect('tags')
+    
+    if "delete_tag" in request.POST:
+      tags = Tags.objects.get(id=request.POST.get('tagId'))
+      tags.delete()
+      return redirect('tags')
+  
+  context={'addTagForm': addTagForm, 'tags': tags}
+  return render(request, 'dashboard/tags/tags.html', context)
+
+
+#Update tags page
+@login_required(login_url = 'login')
+def updateTagPage(request, pk):
+  tags = Tags.objects.get(id=pk)
+  updateTagForm = TagForm(instance=tags)
+  
+  if request.method == 'POST':
+    updateTagForm = TagForm(request.POST, instance=tags)
+    if updateTagForm.is_valid():
+      updateTagForm.save()
+      return redirect('tags')
+    
+  context={'updateTagForm': updateTagForm}
+  return render(request, 'dashboard/tags/update_tags.html', context)
+
+
+#Portfoio Page
+@login_required(login_url = 'login')
+def portfolioPage(request):
+  addPortfolioForm = PortfolioForm()
+  portfolios = Portfolios.objects.all()
+  tags = Tags.objects.all()
+  
+  if request.method == 'POST':
+    if "add_portfolio" in request.POST:
+      addPortfolioForm = PortfolioForm(request.POST, request.FILES)
+      if addPortfolioForm.is_valid():
+        newPortfolio = Portfolios.objects.create(
+          image_path = request.FILES['image_path'],
+          title = request.POST.get('title'),
+          short_desc = request.POST.get('short_desc'),
+          url = request.POST.get('url'),
+        )
+        for tag in request.POST.getlist('tag'):
+          newPortfolio.tags.add(Tags.objects.get(id=tag))
+        
+        newPortfolio.save()
+        return redirect('portfolios')
+    
+    if "delete_portfolio" in request.POST:
+      portfolios = Portfolios.objects.get(id=request.POST.get('portfolioId'))
+      portfolios.tags.clear()
+      portfolios.delete()
+      return redirect('portfolios')
+  
+  context={'addPortfolioForm': addPortfolioForm, 'portfolios': portfolios, 'tags': tags, }
+  return render(request, 'dashboard/portfolios/portfolios.html', context)
+
+
+#Update Portfoio page
+@login_required(login_url = 'login')
+def updatePortfolioPage(request, pk):
+  portfolios = Portfolios.objects.get(id=pk)
+  updatePortfolioForm = UpdatePortfolioForm(instance=portfolios)
+  
+  if request.method == 'POST':
+    updatePortfolioForm = PortfolioForm(request.POST, request.FILES, instance=portfolios)
+    if updatePortfolioForm.is_valid():
+      portfolios.title = request.POST.get('title')
+      portfolios.short_desc = request.POST.get('short_desc')
+      portfolios.url = request.POST.get('url')
+      portfolios.tags.clear()
+      if request.FILES:
+        portfolios.image_path = request.FILES['image_path']
+      for tag in request.POST.getlist('tag'):
+        portfolios.tags.add(Tags.objects.get(id=tag))
+      
+      portfolios.save()
+      return redirect('portfolios')
+    
+  context={'updatePortfolioForm': updatePortfolioForm}
+  return render(request, 'dashboard/portfolios/update_portfolios.html', context)

@@ -1,0 +1,41 @@
+ <div class="card p-5 border-rounded">
+   <p class="fs-6 fw-bold">Current Tags</p>
+   <div class="table-responsive">
+     <table class="table table-striped align-middle">
+       <thead>
+         <tr>
+           <th scope="col">Name</th>
+           <th scope="col">Edit</th>
+           <th scope="col">Delete</th>
+         </tr>
+       </thead>
+       <tbody>
+         {% for tag in tags %}
+         <tr>
+           <td>{{tag.name}}</td>
+           <td>
+             <a href="{% url 'update-tag' tag.id %}">
+               <button type="button" class="btn primary-button"><i class="far fa-edit"></i></button>
+             </a>
+           </td>
+           <td>
+             <div class="mt-3">
+               <form action="" method="POST" onsubmit="return confirmDelete('{{ tag.title }}')">
+                 {% csrf_token %}
+                 <input type="hidden" name="tagId" value="{{tag.id}}">
+                 <button type="submit" name="delete_tag" class="btn btn-danger"><i
+                     class="far fa-trash-alt"></i></button>
+               </form>
+             </div>
+           </td>
+         </tr>
+         {% endfor %}
+         {% if not tags %}
+         <tr>
+           <td colspan="6">No Data Yet</td>
+         </tr>
+         {% endif %}
+       </tbody>
+     </table>
+   </div>
+ </div>

@@ -67,3 +67,26 @@ class Skills(models.Model):
   
   class Meta:
     ordering = ['-created_at']
+    
+
+class Tags(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  name = models.CharField(max_length=250, null=False, unique=True)
+  
+  class Meta:
+    ordering = ['-created_at']
+    
+
+class Portfolios(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  image_path = ProcessedImageField(processors=[ResizeToFit(500)],format='JPEG',options={'quality': 70},null = True)
+  title = models.CharField(max_length=250, null=False)
+  short_desc = models.TextField(null=False)
+  url = models.TextField(null=True)
+  tags = models.ManyToManyField(Tags, blank=True)
+  
+  class Meta:
+    ordering = ['-created_at']
+    

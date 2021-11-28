@@ -13,4 +13,8 @@ urlpatterns = [
   path('certificates/update/<str:pk>', views.updateCertificatePage, name="update-certificate"),
   path('skills/', views.skillPage, name="skills"),
   path('skills/update/<str:pk>', views.updateSkillPage, name="update-skill"),
+  path('tags/', views.tagPage, name="tags"),
+  path('tags/update/<str:pk>', views.updateTagPage, name="update-tag"),
+  path('portfolios/', views.portfolioPage, name="portfolios"),
+  path('portfolios/update/<str:pk>', views.updatePortfolioPage, name="update-portfolio"),
   ]

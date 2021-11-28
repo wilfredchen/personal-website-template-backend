@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Certificates, Experiences, Skills, User, Education
+from .models import Certificates, Experiences, Skills, User, Education, Tags, Portfolios
+from django.core.validators import FileExtensionValidator, validate_image_file_extension
 
 # General User Info Form
 class UserEditForm(forms.Form, ModelForm):
@@ -92,7 +93,10 @@ class PasswordUpdateForm(forms.Form, ModelForm):
   
 # Profile Photo Update
 class ProfilePhotoForm(forms.Form, ModelForm):
-  profile_photo = forms.FileField(
+  profile_photo = forms.ImageField(
+    validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
+                                                                       message="The image must be in jpg, jpeg or png format.")],
+    widget = forms.FileInput(),
     label = "Profile Photo",
     required = True
   )
@@ -210,3 +214,102 @@ class SkillForm(forms.Form, ModelForm):
   class Meta:
     model = Skills
     fields = ['name', 'percentage']
+
+
+#Add/Update Tags
+class TagForm(forms.Form, ModelForm):
+  name = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Web Development'}),
+    label = "Name",
+    required = True
+  )
+  
+  class Meta:
+    model = Tags
+    fields = ['name']
+    
+
+#Add Portfolio
+class PortfolioForm(forms.Form, ModelForm):
+  image_path = forms.ImageField(
+    validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
+                                                                       message="The image must be in jpg, jpeg or png format.")],
+    widget = forms.FileInput(),
+    label = "Portfolio Photo",
+    required = True
+  )
+  title = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Android Application Development For ABC.org'}),
+    label = "Title",
+    required = True
+  )
+  short_desc = forms.CharField(
+    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about your portfolio'}),
+    label = "Short Description",
+    help_text = "Limited to 250 characters",
+    required = True
+  )
+  url = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Link to your work if any'}),
+    label = "Portfolio URL",
+    required = False
+  )
+  tag = forms.MultipleChoiceField(
+    choices=Tags.objects.values_list('id', 'name'),
+    label="Tags (Multi-choice)",
+    required=True,
+  )
+  
+  class Meta:
+    model = Portfolios
+    fields = ['image_path', 'title', 'short_desc', 'url', 'tag']
+  
+  def clean(self):
+    cleaned_data = super(PortfolioForm, self).clean()
+    short_desc = cleaned_data.get("short_desc")
+    if short_desc is not None and len(short_desc) > 250:
+      self.add_error("short_desc", "Your short description is turning into an essay.")
+    return cleaned_data
+
+
+#Update Portfolio
+class UpdatePortfolioForm(forms.Form, ModelForm):
+  image_path = forms.ImageField(
+    validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
+                                                                       message="The image must be in jpg, jpeg or png format.")],
+    widget = forms.FileInput(),
+    label = "Portfolio Photo",
+    required = False
+  )
+  title = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Android Application Development For ABC.org'}),
+    label = "Title",
+    required = True
+  )
+  short_desc = forms.CharField(
+    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about your portfolio'}),
+    label = "Short Description",
+    help_text = "Limited to 250 characters",
+    required = True
+  )
+  url = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Link to your work if any'}),
+    label = "Portfolio URL",
+    required = False
+  )
+  tag = forms.MultipleChoiceField(
+    choices=Tags.objects.values_list('id', 'name'),
+    label="Tags (Multi-choice)",
+    required=True,
+  )
+  
+  class Meta:
+    model = Portfolios
+    fields = ['image_path', 'title', 'short_desc', 'url', 'tag']
+  
+  def clean(self):
+    cleaned_data = super(UpdatePortfolioForm, self).clean()
+    short_desc = cleaned_data.get("short_desc")
+    if short_desc is not None and len(short_desc) > 250:
+      self.add_error("short_desc", "Your short description is turning into an essay.")
+    return cleaned_data

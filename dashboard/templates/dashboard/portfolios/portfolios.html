@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% block content %}
+<h3 class="pt-2 pb-2">Portfolios</h3>
+<div class="row">
+  <div class="col col-12 col-xl-6 mb-3">
+    <!--Add Portfolio Form-->
+    {% include 'dashboard/portfolios/add_portfolios.html' %}
+  </div>
+  <div class=" col col-12 col-xl-6">
+    <!--Portfolio Table-->
+    {% include 'dashboard/portfolios/portfolios_table.html' %}
+  </div>
+</div>
+{% endblock %}
