@@ -16,7 +16,7 @@
          {% for portfolio in portfolios %}
          <tr>
            <td>
-             <img src="{% get_static_prefix %}{{portfolio.image_path.url}}" class="rounded portfolio-img">
+             <img src="{{portfolio.image_path.url}}" class="rounded portfolio-img">
            </td>
            <td>{{portfolio.title}}</td>
            <td>{{portfolio.short_desc}}</td>

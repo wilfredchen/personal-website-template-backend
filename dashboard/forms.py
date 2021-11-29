@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from .models import Certificates, Experiences, Skills, User, Education, Tags, Portfolios
 from django.core.validators import FileExtensionValidator, validate_image_file_extension
+from .validators import validate_image_size
 
 # General User Info Form
 class UserEditForm(forms.Form, ModelForm):
@@ -95,7 +96,7 @@ class PasswordUpdateForm(forms.Form, ModelForm):
 class ProfilePhotoForm(forms.Form, ModelForm):
   profile_photo = forms.ImageField(
     validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
-                                                                       message="The image must be in jpg, jpeg or png format.")],
+                                                                       message="The image must be in jpg, jpeg or png format."), validate_image_size],
     widget = forms.FileInput(),
     label = "Profile Photo",
     required = True
@@ -104,6 +105,20 @@ class ProfilePhotoForm(forms.Form, ModelForm):
   class Meta:
     model = User
     fields = ['profile_photo']
+ 
+
+# Upload CV Form
+class CVForm(forms.Form, ModelForm):
+  cv_path = forms.FileField(
+    validators=[FileExtensionValidator(allowed_extensions=['pdf'], message="Please upload a PDF file.")],
+    widget = forms.FileInput(),
+    label = "Upload CV",
+    required = True
+  )
+  
+  class Meta:
+    model = User
+    fields = ['cv_path']
  
     
 # Add/Update Experiences Form
@@ -233,7 +248,7 @@ class TagForm(forms.Form, ModelForm):
 class PortfolioForm(forms.Form, ModelForm):
   image_path = forms.ImageField(
     validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
-                                                                       message="The image must be in jpg, jpeg or png format.")],
+                                                                       message="The image must be in jpg, jpeg or png format."), validate_image_size],
     widget = forms.FileInput(),
     label = "Portfolio Photo",
     required = True
@@ -276,7 +291,7 @@ class PortfolioForm(forms.Form, ModelForm):
 class UpdatePortfolioForm(forms.Form, ModelForm):
   image_path = forms.ImageField(
     validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
-                                                                       message="The image must be in jpg, jpeg or png format.")],
+                                                                       message="The image must be in jpg, jpeg or png format."), validate_image_size],
     widget = forms.FileInput(),
     label = "Portfolio Photo",
     required = False

@@ -159,11 +159,11 @@
           </a>
           {% if not request.user.profile_photo or request.user.profile_photo is None %}
           <div>
-            <img src="{% get_static_prefix %}{{ 'images/profile1.jpg' }}" class="profileImg me-4" />
+            <img src="{{ 'images/profile1.jpg' }}" class="profileImg me-4" />
           </div>
           {% else %}
           <div>
-            <img src="{% get_static_prefix %}{{request.user.profile_photo.url}}" class="profileImg me-4" />
+            <img src="{{request.user.profile_photo.url}}" class="profileImg me-4" />
           </div>
           {% endif %}
         </div>

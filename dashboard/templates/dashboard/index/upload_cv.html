@@ -1,18 +1,15 @@
 {% load widget_tweaks static %}
 <div class="card p-5 border-rounded mb-3">
-  <p class="fs-6 fw-bold">Update Profile Photo</p>
-  {% if not profile_photo or profile_photo is None %}
-  <div class="text-center">
-    <img src="{{ defaultImg }}" class="profilePhoto" />
-  </div>
-  {% else %}
-  <div class="text-center">
-    <img src="{{request.user.profile_photo.url}}" class="profilePhoto" />
-  </div>
-  {% endif %}
+  <p class="fs-6 fw-bold">Upload CV</p>
+  <p class="fs-7">Current File:
+    {% if request.user.cv_path.url %}
+    <a href="{{request.user.cv_path.url}}" download>Download</a>
+    {% else %}
+    None
+    {% endif %}</p>
   <form action="" method="POST" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
-    {% for field in profilePhotoForm %}
+    {% for field in cvForm %}
     <div class="mb-3">
       <label class="form-label font-dark-gray"> {{ field.label_tag }} {% if field.field.required %} *
         {% endif %}
@@ -30,7 +27,7 @@
     </div>
     {% endfor %}
     <div class="text-end">
-      <input type="submit" name="update_profile_photo" value="Update" class="btn primary-button mb-3" />
+      <input type="submit" name="update_cv" value="Update" class="btn primary-button mb-3" />
     </div>
   </form>
 </div>

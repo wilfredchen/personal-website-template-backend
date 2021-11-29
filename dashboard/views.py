@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm
+from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm, CVForm
 from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios
 import random
 # Create your views here.
@@ -38,6 +38,7 @@ def homePage(request):
   userEditForm = UserEditForm(instance=user)
   passwordUpdateForm = PasswordUpdateForm()
   profilePhotoForm = ProfilePhotoForm()
+  cvForm = CVForm()
   randNum = random.randint(1, 5)
   defaultImg = f'images/profile{randNum}.jpg'
   
@@ -63,8 +64,14 @@ def homePage(request):
       if profilePhotoForm.is_valid(): #if form is valid
         profilePhotoForm.save() #update profile photo, django clean up auto delete the old photo file from media
         return redirect('home')
+    
+    if "update_cv" in request.POST:#if form contain update_cv
+      cvForm = CVForm(request.POST, request.FILES, instance=user)
+      if cvForm.is_valid():
+        cvForm.save()
+        return redirect('home')
       
-  context = {'userEditForm': userEditForm, 'passwordUpdateForm': passwordUpdateForm, 'profilePhotoForm': profilePhotoForm, 
+  context = {'userEditForm': userEditForm, 'passwordUpdateForm': passwordUpdateForm, 'profilePhotoForm': profilePhotoForm, 'cvForm': cvForm,
              'profile_photo': user.profile_photo, 'defaultImg': defaultImg}
   return render(request, 'dashboard/index/index.html', context)
 
