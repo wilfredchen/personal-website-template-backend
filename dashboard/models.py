@@ -91,4 +91,13 @@ class Portfolios(models.Model):
   
   class Meta:
     ordering = ['-created_at']
-    
+
+
+class UISetting(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  name = models.CharField(max_length=250, null = False, unique = True)
+  show = models.BooleanField()
+  
+  class Meta:
+    ordering = ['name']

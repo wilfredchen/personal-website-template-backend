@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm, CVForm
-from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios
+from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios, UISetting
 import random
 # Create your views here.
 
@@ -322,3 +322,37 @@ def updatePortfolioPage(request, pk):
     
   context={'updatePortfolioForm': updatePortfolioForm}
   return render(request, 'dashboard/portfolios/update_portfolios.html', context)
+
+
+@login_required(login_url = 'login')
+def setting(request):
+  uiSetting = UISetting.objects.all()
+  if request.method == 'POST':
+    if "update_ui_settings" in request.POST:
+      uiSettingUpdateAbout = UISetting.objects.get(name='About')
+      uiSettingUpdateContact = UISetting.objects.get(name='Contact')
+      uiSettingUpdatePortfolios = UISetting.objects.get(name='Portfolios')
+      
+      if request.POST.get('About') == 'on':
+        uiSettingUpdateAbout.show = True
+        uiSettingUpdateAbout.save()
+      else:
+        uiSettingUpdateAbout.show = False
+        uiSettingUpdateAbout.save()
+        
+      if request.POST.get('Contact') == 'on':
+        uiSettingUpdateContact.show = True
+        uiSettingUpdateContact.save()
+      else:
+        uiSettingUpdateContact.show = False
+        uiSettingUpdateContact.save()
+        
+      if request.POST.get('Portfolios') == 'on':
+        uiSettingUpdatePortfolios.show = True
+        uiSettingUpdatePortfolios.save()
+      else:
+        uiSettingUpdatePortfolios.show = False
+        uiSettingUpdatePortfolios.save()
+  
+  context={'uiSetting':uiSetting}
+  return render(request, 'dashboard/setting/setting.html', context)

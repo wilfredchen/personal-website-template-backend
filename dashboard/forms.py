@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Certificates, Experiences, Skills, User, Education, Tags, Portfolios
+from .models import Certificates, Experiences, Skills, UISetting, User, Education, Tags, Portfolios
 from django.core.validators import FileExtensionValidator, validate_image_file_extension
 from .validators import validate_image_size
 

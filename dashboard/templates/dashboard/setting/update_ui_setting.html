@@ -1,0 +1,17 @@
+{% load widget_tweaks static %}
+<div class="card p-5 border-rounded">
+  <p class="fs-6 fw-bold">Update UI Settings</p>
+  <form action="" method="POST" novalidate>
+    {% csrf_token %}
+    {% for setting in uiSetting %}
+    <div class="form-check form-switch">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Show {{setting.name}} Page</label>
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="{{setting.name}}"
+        {% if setting.show %} checked {% endif %}>
+    </div>
+    {% endfor %}
+    <div class="text-end mt-3">
+      <input type="submit" value="Update" name="update_ui_settings" class="btn primary-button mb-3" />
+    </div>
+  </form>
+</div>
