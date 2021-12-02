@@ -2,12 +2,9 @@ General purpose personal website/portfolio website which include admin dashboard
 
 Dependency requirements - 
 
-pip3 install libsass django-compressor django-sass-processor
-
-pip3 install mysqlconfig
-
-pip3 install django-widget-tweaks
-
-pip3 install django-imagekit
-
-pip3 install django-cleanup
+pip install libsass django-compressor django-sass-processor
+pip install mysqlconfig
+pip install django-widget-tweaks
+pip install django-imagekit
+pip install django-cleanup
+pip install djangorestframework
