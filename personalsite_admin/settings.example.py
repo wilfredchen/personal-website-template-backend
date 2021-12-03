@@ -153,7 +153,7 @@ MEDIA_ROOT = BASE_DIR / 'static/uploaded'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#CORS settings
+#CORS settings, add your own domain here
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
