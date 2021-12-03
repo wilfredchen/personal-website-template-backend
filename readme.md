@@ -12,7 +12,7 @@ pip install django-cleanup
 pip install djangorestframework
 ```
 
-If you want to use mysql instead of
+If you want to use mysql instead of sqlite
 
 ```
 pip install mysqlconfig
