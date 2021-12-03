@@ -4,13 +4,19 @@ This is a backend code + admin dashboard to kick start your personal website dev
 
 Dependency requirements -
 
-`pip install libsass django-compressor django-sass-processor`
-`pip install django-widget-tweaks`
-`pip install django-imagekit`
-`pip install django-cleanup`
-`pip install djangorestframework`
-If you want to use mysql instead of sqlite
-`pip install mysqlconfig`
+```
+pip install libsass django-compressor django-sass-processor
+pip install django-widget-tweaks
+pip install django-imagekit
+pip install django-cleanup
+pip install djangorestframework
+```
+
+If you want to use mysql instead of
+
+```
+pip install mysqlconfig
+```
 
 Instruction -
 
