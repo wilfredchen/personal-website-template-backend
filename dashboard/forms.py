@@ -16,6 +16,11 @@ class UserEditForm(forms.Form, ModelForm):
     label = "Email",
     required = True
   )
+  role = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Software Engineer'}),
+    label = "Current Role",
+    required = True
+  )
   bio1 = forms.CharField(
     widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'First line of a little bit about you.'}),
     label = "First Description",
@@ -25,6 +30,16 @@ class UserEditForm(forms.Form, ModelForm):
     widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'Second line of a little bit more about you.'}),
     label = "Second Description",
     required = False
+  )
+  age = forms.CharField(
+    widget = forms.NumberInput(attrs={'placeholder': '30'}),
+    label = "Age",
+    required = False
+  )
+  nationality = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Myanmar'}),
+    label = "Nationality",
+    required = True
   )
   phone = forms.CharField(
     widget = forms.TimeInput(attrs={'placeholder': '+95 78912346'}),
@@ -46,10 +61,20 @@ class UserEditForm(forms.Form, ModelForm):
     label = "Twitter URL",
     required = False
   )
+  languages = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'English, Chinese'}),
+    label = "Languages",
+    required = True
+  )
+  current_resident = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Singapore'}),
+    label = "Current Resident",
+    required = True
+  )
   
   class Meta:
     model = User
-    fields = ['name', 'email2', 'bio1', 'bio2', 'phone', 'linkedin_url', 'facebook_url', 'twitter_url']
+    fields = ['name', 'email2', 'role', 'bio1', 'bio2', 'age', 'nationality', 'phone', 'linkedin_url', 'facebook_url', 'twitter_url', 'languages', 'current_resident']
     
 
   def clean(self):
@@ -144,10 +169,15 @@ class ExperiencesForm(forms.Form, ModelForm):
     help_text = "Limited to 300 characters",
     required = False
   )
+  location = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Singapore'}),
+    label = "Location",
+    required = True
+  )
   
   class Meta:
     model = Experiences
-    fields = ['year', 'title', 'company', 'short_desc']
+    fields = ['year', 'title', 'company', 'short_desc', 'location']
   
   def clean(self):
     cleaned_data = super(ExperiencesForm, self).clean()
@@ -179,16 +209,21 @@ class EducationForm(forms.Form, ModelForm):
     label = "Grade",
     required = True
   )
+  location = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Singapore'}),
+    label = "Location",
+    required = True
+  )
   
   class Meta:
     model = Education
-    fields=['year', 'major', 'school', 'grade']
+    fields=['year', 'major', 'school', 'grade', 'location']
 
 
 #Add/Update Certificate Form
 class CertificateForm(forms.Form, ModelForm):
   year = forms.CharField(
-    widget = forms.TextInput(attrs={'placeholder': '2019 - 2021'}),
+    widget = forms.TextInput(attrs={'placeholder': 'Jan 2019 - Mar 2021'}),
     label = "Year",
     required = True
   )

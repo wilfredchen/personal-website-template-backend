@@ -8,14 +8,18 @@ class User(AbstractUser):
   name = models.CharField(max_length=250, null=True)
   email = models.EmailField(unique=True, null=True)
   email2 = models.EmailField(unique=True, null=True)
+  role = models.CharField(max_length=250, null=True)
   bio1 = models.TextField(null=True)
   bio2 = models.TextField(null=True)
   age = models.IntegerField(null=True)
+  nationality = models.CharField(max_length=200,null = True)
   profile_photo = ProcessedImageField(upload_to='images', processors=[ResizeToFit(600)],format='JPEG',options={'quality': 70},null = True)
   phone = models.CharField(max_length=200, null=True)
   linkedin_url = models.TextField(null=True)
   facebook_url = models.TextField(null=True)
   twitter_url = models.TextField(null=True)
+  languages = models.CharField(max_length=250, null = True)
+  current_resident = models.CharField(max_length=250, null = True)
   cv_path = models.FileField(upload_to='documents', null=True)
   
   USERNAME_FIELD = 'email'
@@ -29,6 +33,7 @@ class Experiences(models.Model):
   title = models.CharField(max_length=250, null=False)
   company = models.CharField(max_length=250, null=False)
   short_desc = models.TextField(null=True)
+  location = models.CharField(max_length=250, null=True)
   
   class Meta:
     ordering = ['-created_at']
@@ -44,6 +49,7 @@ class Education(models.Model):
   major = models.CharField(max_length=250, null=False)
   school = models.CharField(max_length=250, null=False)
   grade = models.CharField(max_length=250, null=False)
+  location = models.CharField(max_length=250, null=True)
   
   class Meta:
     ordering = ['-created_at']

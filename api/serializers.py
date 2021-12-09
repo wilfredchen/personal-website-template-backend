@@ -10,19 +10,19 @@ class UISettingSerializer(ModelSerializer):
 class AboutSerializer(ModelSerializer):
   class Meta:
     model = User
-    fields = ['name', 'email2', 'bio1', 'bio2', 'profile_photo', 'phone', 'linkedin_url', 'facebook_url', 'twitter_url', 'cv_path']
+    fields = ['name', 'email2', 'role', 'bio1', 'bio2', 'age', 'nationality', 'profile_photo', 'phone', 'linkedin_url', 'facebook_url', 'twitter_url', 'languages', 'current_resident', 'cv_path']
     
 
 class ExpSerializer(ModelSerializer):
   class Meta:
     model = Experiences
-    fields = ['year', 'title', 'company', 'short_desc']
+    fields = ['year', 'title', 'company', 'short_desc', 'location']
     
 
 class EduSerializer(ModelSerializer):
   class Meta:
     model = Education
-    fields = ['year', 'major', 'school', 'grade']
+    fields = ['year', 'major', 'school', 'grade', 'location']
     
     
 class CertSerializer(ModelSerializer):

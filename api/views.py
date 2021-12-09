@@ -14,7 +14,7 @@ def getAbout(request):
 @api_view(['GET'])
 def getUISetting(request):
   uiSetting = UISetting.objects.all()
-  serializers = UISettingSerializer(uiSetting)
+  serializers = UISettingSerializer(uiSetting, many = True)
   return Response(serializers.data)
 
 

@@ -10,6 +10,7 @@ pip install django-widget-tweaks
 pip install django-imagekit
 pip install django-cleanup
 pip install djangorestframework
+pip install django-cors-headers
 ```
 
 If you want to use mysql instead of sqlite
