@@ -13,7 +13,7 @@ class User(AbstractUser):
   bio2 = models.TextField(null=True)
   age = models.IntegerField(null=True)
   nationality = models.CharField(max_length=200,null = True)
-  profile_photo = ProcessedImageField(upload_to='images', processors=[ResizeToFit(600)],format='JPEG',options={'quality': 70},null = True)
+  profile_photo = ProcessedImageField(upload_to='images', processors=[ResizeToFit(1650)],format='JPEG',options={'quality': 75},null = True)
   phone = models.CharField(max_length=200, null=True)
   linkedin_url = models.TextField(null=True)
   facebook_url = models.TextField(null=True)

@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from dashboard.models import Certificates, Education, Experiences, User, UISetting, Skills
-from .serializers import AboutSerializer, ContactSerializer, UISettingSerializer, ExpSerializer, EduSerializer, CertSerializer, SkillSerializer
+from dashboard.models import Certificates, Education, Experiences, User, UISetting, Skills, Portfolios
+from .serializers import AboutSerializer, ContactSerializer, PortfolioSerializer, UISettingSerializer, ExpSerializer, EduSerializer, CertSerializer, SkillSerializer
 from api import serializers
 
 @api_view(['GET'])
@@ -51,3 +51,10 @@ def getContact(request):
   contact = User.objects.all().first()
   serializers = ContactSerializer(contact)
   return Response(serializers.data)
+
+@api_view(['GET'])
+def getPortfolios(request):
+  portfolio = Portfolios.objects.all()
+  serializers = PortfolioSerializer(portfolio, many = True)
+  return Response(serializers.data)
+

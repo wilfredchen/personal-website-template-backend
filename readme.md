@@ -24,3 +24,7 @@ Instruction -
 1. Install necessary dependency.
 2. Change settings.example.py to settings.py and include your own database config.
 3. Run the server.
+
+For UISetting -
+
+Insert UI you want the ability to show or hide into the table. E.g About, Portfolio, Contact, Blog, etc...

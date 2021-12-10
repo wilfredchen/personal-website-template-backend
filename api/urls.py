@@ -8,5 +8,6 @@ urlpatterns = [
   path('educations', views.getEdu),
   path('certificates', views.getCert),
   path('skills', views.getSkill),
-  path('contact', views.getContact)
+  path('contact', views.getContact),
+  path('portfolios', views.getPortfolios)
 ]

@@ -44,6 +44,10 @@
 .fs-8 {
   font-size: 12px; }
 
+.info {
+  font-size: 13px;
+  color: #aaa; }
+
 .border-rounded {
   border-radius: 12px !important; }
 
