@@ -39,8 +39,3 @@ confirmDelete = (title) => {
   if (agree) return true;
   else return false;
 };
-//remove message after certain time
-var alertBox = document.getElementById("alertBox");
-setTimeout(function () {
-  alertBox.style.display = "none";
-}, 5000);
