@@ -16,7 +16,8 @@ pip install django-cors-headers
 If you want to use mysql instead of sqlite
 
 ```
-pip install mysqlconfig
+pip install mysqlconfig (or)
+pip install mysql-connector-python
 ```
 
 Instruction -
