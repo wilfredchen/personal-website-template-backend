@@ -34,6 +34,14 @@
           {% endif %}
         </div>
         {% endfor %}
+        <div>
+          <label class="form-label font-dark-gray"> Tags (Multiple Select) </label>
+          <select class="form-select" name="tag" multiple aria-label="Tags: multiple select">
+            {% for tag in tags %}
+            <option value="{{tag.id}}">{{tag.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
         <div class="text-end">
           <input type="submit" value="Update" class="btn primary-button mb-3" />
         </div>

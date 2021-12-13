@@ -23,7 +23,7 @@ class User(AbstractUser):
   cv_path = models.FileField(upload_to='documents', null=True)
   
   USERNAME_FIELD = 'email'
-  REQUIRED_FIELDS = []
+  REQUIRED_FIELDS = ['username']
 
 
 class Experiences(models.Model):

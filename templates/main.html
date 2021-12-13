@@ -180,7 +180,7 @@
           </div>
           {% else %}
           <div>
-            <img src="{{request.user.profile_photo.url}}" class="profileImg me-4" />
+            <img src="{% static request.user.profile_photo.url %}" class="profileImg me-4" />
           </div>
           {% endif %}
         </div>

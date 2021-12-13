@@ -20,6 +20,8 @@ def loginPage(request):
     if user is not None:
       login(request,user)
       return redirect('home')
+    else:
+      messages.error(request, "Email or Password is incorrect!")
       
   context = {}
   return render(request, 'dashboard/login.html', context)
@@ -304,7 +306,7 @@ def portfolioPage(request):
 def updatePortfolioPage(request, pk):
   portfolios = Portfolios.objects.get(id=pk)
   updatePortfolioForm = UpdatePortfolioForm(instance=portfolios)
-  
+  tags = Tags.objects.all()
   if request.method == 'POST':
     updatePortfolioForm = PortfolioForm(request.POST, request.FILES, instance=portfolios)
     if updatePortfolioForm.is_valid():
@@ -320,7 +322,7 @@ def updatePortfolioPage(request, pk):
       portfolios.save()
       return redirect('portfolios')
     
-  context={'updatePortfolioForm': updatePortfolioForm}
+  context={'updatePortfolioForm': updatePortfolioForm, 'tags': tags,}
   return render(request, 'dashboard/portfolios/update_portfolios.html', context)
 
 

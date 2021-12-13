@@ -304,15 +304,15 @@ class PortfolioForm(forms.Form, ModelForm):
     label = "Portfolio URL",
     required = False
   )
-  tag = forms.MultipleChoiceField(
-    choices=Tags.objects.values_list('id', 'name'),
-    label="Tags (Multi-choice)",
-    required=True,
-  )
+  # tag = forms.ModelMultipleChoiceField(
+  #   queryset=Tags.objects.all()90,
+  #   label="Tags (Multi-choice)",
+  #   required=True,
+  # )
   
   class Meta:
     model = Portfolios
-    fields = ['image_path', 'title', 'short_desc', 'url', 'tag']
+    fields = ['image_path', 'title', 'short_desc', 'url']
   
   def clean(self):
     cleaned_data = super(PortfolioForm, self).clean()
@@ -347,15 +347,15 @@ class UpdatePortfolioForm(forms.Form, ModelForm):
     label = "Portfolio URL",
     required = False
   )
-  tag = forms.MultipleChoiceField(
-    choices=Tags.objects.values_list('id', 'name'),
-    label="Tags (Multi-choice)",
-    required=True,
-  )
+  # tag = forms.MultipleChoiceField(
+  #   choices=Tags.objects.values_list('id', 'name'),
+  #   label="Tags (Multi-choice)",
+  #   required=True,
+  # )
   
   class Meta:
     model = Portfolios
-    fields = ['image_path', 'title', 'short_desc', 'url', 'tag']
+    fields = ['image_path', 'title', 'short_desc', 'url']
   
   def clean(self):
     cleaned_data = super(UpdatePortfolioForm, self).clean()

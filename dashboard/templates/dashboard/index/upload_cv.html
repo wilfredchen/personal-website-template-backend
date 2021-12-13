@@ -2,7 +2,7 @@
 <div class="card p-5 border-rounded mb-3">
   <p class="fs-6 fw-bold">Upload CV</p>
   <p class="fs-7">Current File:
-    {% if request.user.cv_path.url %}
+    {% if request.user.cv_path %}
     <a href="{{request.user.cv_path.url}}" download>Download</a>
     {% else %}
     None

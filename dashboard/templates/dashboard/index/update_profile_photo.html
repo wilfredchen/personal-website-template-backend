@@ -7,7 +7,7 @@
   </div>
   {% else %}
   <div class="text-center">
-    <img src="{{request.user.profile_photo.url}}" class="profilePhoto" />
+    <img src="{% static request.user.profile_photo.url %}" class="profilePhoto" />
   </div>
   {% endif %}
   <form action="" method="POST" enctype="multipart/form-data" novalidate>

@@ -25,6 +25,15 @@
           <label for="password" class="form-label font-dark-gray">Password</label>
           <input type="password" name="password" class="form-control" id="password">
         </div>
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
         <div class="col-auto text-end">
           <button type="submit" class="btn primary-button mb-3">Login</button>
         </div>
