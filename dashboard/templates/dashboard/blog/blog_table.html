@@ -1,0 +1,49 @@
+{% load static %}
+<div class="card p-5 border-rounded">
+  <p class="fs-6 fw-bold">Current blogs <span class="info ms-3"><i class="fas fa-info-circle"></i> Latest On
+      Top<span></p>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Short Description</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for blog in blogs %}
+        <tr>
+          <td>
+            <img src="{% static blog.image_path.url %}" class="rounded thumbnail-img">
+          </td>
+          <td>{{blog.title}}</td>
+          <td>{{blog.short_desc}}</td>
+          <td>
+            <a href="{% url 'update-blog' blog.id %}">
+              <button type="button" class="btn primary-button"><i class="far fa-edit"></i></button>
+            </a>
+          </td>
+          <td>
+            <div class="mt-3">
+              <form action="" method="POST" onsubmit="return confirmDelete('{{ blog.title }}')">
+                {% csrf_token %}
+                <input type="hidden" name="blogId" value="{{blog.id}}">
+                <button type="submit" name="delete_blog" class="btn btn-danger"><i
+                    class="far fa-trash-alt"></i></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+        {% if not blogs %}
+        <tr>
+          <td colspan="5">No Data Yet</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>

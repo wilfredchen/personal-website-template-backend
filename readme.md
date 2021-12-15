@@ -11,6 +11,7 @@ pip install django-imagekit
 pip install django-cleanup
 pip install djangorestframework
 pip install django-cors-headers
+pip install django-tinymce
 ```
 
 If you want to use mysql instead of sqlite
@@ -28,4 +29,4 @@ Instruction -
 
 For UISetting -
 
-Insert UI you want the ability to show or hide into the table. E.g About, Portfolio, Contact, Blog, etc...
+Insert UI you want the ability to show or hide into the UISetting table. E.g About, Portfolio, Contact, etc...

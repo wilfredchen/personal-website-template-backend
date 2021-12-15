@@ -1,0 +1,85 @@
+{% load widget_tweaks static %}
+<div class="card p-5 border-rounded">
+  <p class="fs-6 fw-bold">Add New Blog Post</p>
+  <form action="" method="POST" novalidate enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label font-dark-gray"> {{ blogForm.image_path.label_tag }}
+        *
+      </label>
+      {% if blogForm.image_path.errors %}
+      {% render_field blogForm.image_path class="form-control is-invalid" %}
+      {% for error in blogForm.image_path.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {% render_field blogForm.image_path class="form-control" %}
+      {% endif %}
+      {% if blogForm.image_path.help_text %}
+      <div class="form-text">{{ blogForm.image_path.help_text }}</div>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label font-dark-gray"> {{ blogForm.title.label_tag }}
+        *
+      </label>
+      {% if blogForm.title.errors %}
+      {% render_field blogForm.title class="form-control is-invalid" %}
+      {% for error in blogForm.title.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {% render_field blogForm.title class="form-control" %}
+      {% endif %}
+      {% if blogForm.title.help_text %}
+      <div class="form-text">{{ blogForm.title.help_text }}</div>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label font-dark-gray"> {{ blogForm.short_desc.label_tag }}
+        *
+      </label>
+      {% if blogForm.short_desc.errors %}
+      {% render_field blogForm.short_desc class="form-control is-invalid" %}
+      {% for error in blogForm.short_desc.errors %}
+      <div class="invalid-feedback">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% else %}
+      {% render_field blogForm.short_desc class="form-control" %}
+      {% endif %}
+      {% if blogForm.short_desc.help_text %}
+      <div class="form-text">{{ blogForm.short_desc.help_text }}</div>
+      {% endif %}
+    </div>
+    <div class="mb-3 rich-text-editor">
+      <label class="form-label font-dark-gray"> {{ blogForm.main_desc.label_tag }}
+        *
+      </label>
+      <div class="small-border-rounded {% if blogForm.main_desc.errors %} error-border {% endif %}">
+        {{blogForm.main_desc}}
+      </div>
+      {% if blogForm.main_desc.errors %}
+      {% for error in blogForm.main_desc.errors %}
+      <div class="text-danger fs-7 mt-1">
+        {{ error }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      <div class="form-text"><i class="fas fa-info-circle"></i>
+        When inserting image, add 100&#27; to width and keep height empty to maintain ratio and
+        responsive for all screen size. Give a approprate name in the alternative description.</div>
+      <div class="form-text"><i class="fas fa-info-circle"></i>
+        When embedding youtube videos, add 100&#27; to width and height around 500 to maintain ratio and
+        responsive for all screen size.</div>
+    </div>
+    <div class="text-end">
+      <input type="submit" value="Post" name="add_blog" class="btn primary-button mb-3" />
+    </div>
+  </form>
+</div>

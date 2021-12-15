@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
+from tinymce import models as tinymce_models
 # Create your models here.
 
 class User(AbstractUser):
@@ -107,3 +108,16 @@ class UISetting(models.Model):
   
   class Meta:
     ordering = ['name']
+    
+
+class Blog(models.Model):
+  created_at = models.DateTimeField(auto_now_add = True)
+  updated_at = models.DateTimeField(auto_now = True)
+  image_path = ProcessedImageField(upload_to='images', processors=[ResizeToFit(600)],format='JPEG',options={'quality': 70},null = True)
+  title = models.CharField(max_length=250, null = False)
+  short_desc = models.TextField(null=False)
+  main_desc = tinymce_models.HTMLField()
+  tags = models.ManyToManyField(Tags, blank=True)
+  
+  class Meta:
+    ordering = ['-created_at']

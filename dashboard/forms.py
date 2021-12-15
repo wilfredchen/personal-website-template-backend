@@ -1,8 +1,9 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Certificates, Experiences, Skills, UISetting, User, Education, Tags, Portfolios
+from .models import Blog, Certificates, Experiences, Skills, User, Education, Tags, Portfolios
 from django.core.validators import FileExtensionValidator, validate_image_file_extension
 from .validators import validate_image_size
+from tinymce.widgets import TinyMCE
 
 # General User Info Form
 class UserEditForm(forms.Form, ModelForm):
@@ -279,7 +280,7 @@ class TagForm(forms.Form, ModelForm):
     fields = ['name']
     
 
-#Add Portfolio
+#Add/Update Portfolio
 class PortfolioForm(forms.Form, ModelForm):
   image_path = forms.ImageField(
     validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
@@ -304,11 +305,6 @@ class PortfolioForm(forms.Form, ModelForm):
     label = "Portfolio URL",
     required = False
   )
-  # tag = forms.ModelMultipleChoiceField(
-  #   queryset=Tags.objects.all()90,
-  #   label="Tags (Multi-choice)",
-  #   required=True,
-  # )
   
   class Meta:
     model = Portfolios
@@ -322,43 +318,82 @@ class PortfolioForm(forms.Form, ModelForm):
     return cleaned_data
 
 
-#Update Portfolio
-class UpdatePortfolioForm(forms.Form, ModelForm):
+#Add Blog
+class BlogForm(forms.Form, ModelForm):
   image_path = forms.ImageField(
     validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
                                                                        message="The image must be in jpg, jpeg or png format."), validate_image_size],
     widget = forms.FileInput(),
-    label = "Portfolio Photo",
-    required = False
+    label = "Main Photo",
+    required = True
   )
   title = forms.CharField(
-    widget = forms.TextInput(attrs={'placeholder': 'Android Application Development For ABC.org'}),
+    widget = forms.TextInput(attrs={'placeholder': 'Your blog title!'}),
     label = "Title",
     required = True
   )
   short_desc = forms.CharField(
-    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about your portfolio'}),
+    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about your blog content'}),
     label = "Short Description",
     help_text = "Limited to 250 characters",
     required = True
   )
-  url = forms.CharField(
-    widget = forms.TextInput(attrs={'placeholder': 'Link to your work if any'}),
-    label = "Portfolio URL",
-    required = False
+  main_desc = forms.CharField(
+    widget = TinyMCE(),
+    label = "Main Description",
+    required = True
   )
-  # tag = forms.MultipleChoiceField(
-  #   choices=Tags.objects.values_list('id', 'name'),
-  #   label="Tags (Multi-choice)",
-  #   required=True,
-  # )
   
   class Meta:
-    model = Portfolios
-    fields = ['image_path', 'title', 'short_desc', 'url']
+    model = Blog
+    fields = ['image_path', 'title', 'short_desc', 'main_desc']
+    
+  class Media:
+    js = ('/static/tinymce/tinymce.min.js',)
   
   def clean(self):
-    cleaned_data = super(UpdatePortfolioForm, self).clean()
+    cleaned_data = super(BlogForm, self).clean()
+    short_desc = cleaned_data.get("short_desc")
+    if short_desc is not None and len(short_desc) > 250:
+      self.add_error("short_desc", "Your short description is turning into an essay.")
+    return cleaned_data
+
+
+#Update Blog
+class UpdateBlogForm(forms.Form, ModelForm):
+  image_path = forms.ImageField(
+    validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
+                                                                       message="The image must be in jpg, jpeg or png format."), validate_image_size],
+    widget = forms.FileInput(),
+    label = "Main Photo",
+    required = False
+  )
+  title = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Your blog title!'}),
+    label = "Title",
+    required = True
+  )
+  short_desc = forms.CharField(
+    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about your blog content'}),
+    label = "Short Description",
+    help_text = "Limited to 250 characters",
+    required = True
+  )
+  main_desc = forms.CharField(
+    widget = TinyMCE(),
+    label = "Main Description",
+    required = True
+  )
+  
+  class Meta:
+    model = Blog
+    fields = ['image_path', 'title', 'short_desc', 'main_desc']
+    
+  class Media:
+    js = ('/static/tinymce/tinymce.min.js',)
+  
+  def clean(self):
+    cleaned_data = super(BlogForm, self).clean()
     short_desc = cleaned_data.get("short_desc")
     if short_desc is not None and len(short_desc) > 250:
       self.add_error("short_desc", "Your short description is turning into an essay.")

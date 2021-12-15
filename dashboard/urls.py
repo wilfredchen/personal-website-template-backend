@@ -17,5 +17,7 @@ urlpatterns = [
   path('tags/update/<str:pk>', views.updateTagPage, name="update-tag"),
   path('portfolios/', views.portfolioPage, name="portfolios"),
   path('portfolios/update/<str:pk>', views.updatePortfolioPage, name="update-portfolio"),
+  path('blog/', views.blogPage, name="blog"),
+  path('blog/update/<str:pk>', views.updateBlogPage, name="update-blog"),
   path('settings/', views.setting, name="settings"),
   ]

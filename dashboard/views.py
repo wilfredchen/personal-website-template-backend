@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm, CVForm
-from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios, UISetting
+from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, BlogForm, UpdateBlogForm, CVForm
+from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios, UISetting, Blog
 import random
 # Create your views here.
 
@@ -305,7 +305,7 @@ def portfolioPage(request):
 @login_required(login_url = 'login')
 def updatePortfolioPage(request, pk):
   portfolios = Portfolios.objects.get(id=pk)
-  updatePortfolioForm = UpdatePortfolioForm(instance=portfolios)
+  updatePortfolioForm = PortfolioForm(instance=portfolios)
   tags = Tags.objects.all()
   if request.method == 'POST':
     updatePortfolioForm = PortfolioForm(request.POST, request.FILES, instance=portfolios)
@@ -358,3 +358,44 @@ def setting(request):
   
   context={'uiSetting':uiSetting}
   return render(request, 'dashboard/setting/setting.html', context)
+
+
+@login_required(login_url='login')
+def blogPage(request):
+  blogForm = BlogForm()
+  blogs = Blog.objects.all()
+  
+  if request.method == 'POST':
+    if "add_blog" in request.POST:
+      blogForm = BlogForm(request.POST, request.FILES)
+      if blogForm.is_valid():
+        newblog = Blog.objects.create(
+          image_path = request.FILES['image_path'],
+          title = request.POST.get('title'),
+          short_desc = request.POST.get('short_desc'),
+          main_desc = request.POST.get('main_desc'),
+        )
+        newblog.save()
+        return redirect('blog')
+   
+  context={'blogForm': blogForm, 'blogs': blogs}
+  return render(request, 'dashboard/blog/blog.html', context)
+
+
+#Update blog page
+@login_required(login_url = 'login')
+def updateBlogPage(request, pk):
+  blog = Blog.objects.get(id=pk)
+  blogForm = UpdateBlogForm(instance=blog)
+  if request.method == 'POST':
+    blogForm = BlogForm(request.POST, request.FILES, instance=blog)
+    if blogForm.is_valid():
+      blog.title = request.POST.get('title')
+      blog.short_desc = request.POST.get('short_desc')
+      blog.main_desc = request.POST.get('main_desc')
+      if request.FILES:
+        blog.image_path = request.FILES['image_path']
+      blog.save()
+      return redirect('blog')
+  context={'blogForm': blogForm }        
+  return render(request, 'dashboard/blog/update_blog.html', context)

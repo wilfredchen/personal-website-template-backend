@@ -48,6 +48,9 @@
   font-size: 13px;
   color: #aaa; }
 
+.small-border-rounded {
+  border-radius: 5px !important; }
+
 .border-rounded {
   border-radius: 12px !important; }
 
@@ -59,11 +62,14 @@
 .navLink {
   text-decoration: none; }
 
-.portfolio-img {
+.thumbnail-img {
   width: 100px;
   height: 100px;
   object-fit: cover;
   object-position: center; }
+
+.error-border {
+  border: 1px solid red; }
 
 /*============================*/
 /*=======Content Start========*/
@@ -193,5 +199,8 @@ body {
   margin-bottom: 20px;
   object-fit: cover;
   object-position: center; }
+
+.tox-tinymce {
+  border-radius: 5px !important; }
 
 /*# sourceMappingURL=main.css.map */

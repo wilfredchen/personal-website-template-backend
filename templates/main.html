@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 {% load sass_tags static %}
-
 <html lang="en">
 
 <head>
@@ -10,6 +10,7 @@
   <link href="{% sass_src 'styles/main.scss' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'styles/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
   <title>Admin Dashboard</title>
+  {{blogForm.media}}
 </head>
 
 <body>
@@ -74,6 +75,14 @@
             <i class="fas fa-tags icon-focus ms-2"></i>
           </div>
           <div class="fs-7 ps-3 font-gray">Tags</div>
+        </div>
+      </a>
+      <a href="{% url 'blog' %}" class="navLink">
+        <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
+          <div style="width: 30px;">
+            <i class="fas fa-pencil-alt icon-focus ms-2"></i>
+          </div>
+          <div class="fs-7 ps-3 font-gray">Blogs</div>
         </div>
       </a>
       <a href="{% url 'settings' %}" class="navLink">
@@ -149,6 +158,14 @@
               <i class="fas fa-tags icon-focus ms-2 fs-6"></i>
             </div>
             <div class="fs-7 ps-3 font-gray">Tags</div>
+          </div>
+        </a>
+        <a href="{% url 'blog' %}" class="navLink">
+          <div class="ms-2 me-2 mt-1 d-flex flex-row align-items-center navItem pt-2 pb-2">
+            <div style="width: 30px;">
+              <i class="fas fa-pencil-alt icon-focus ms-2"></i>
+            </div>
+            <div class="fs-7 ps-3 font-gray">Blogs</div>
           </div>
         </a>
         <a href="{% url 'settings' %}" class="navLink">

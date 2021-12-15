@@ -37,13 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
     'sass_processor',
     'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
     'rest_framework',
     'corsheaders',
-    
+    'tinymce',
     'dashboard.apps.DashboardConfig',
 ]
 
@@ -161,3 +160,23 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
 ]
+
+# #TinyMCE settings
+
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": 600,
+    "menubar": False,
+    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
+    "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
+    "code,help,wordcount",
+    "toolbar": "undo redo | formatselect | "
+    "bold italic backcolor | alignleft aligncenter "
+    "alignright alignjustify | bullist numlist | "
+    "removeformat | link image media",
+    "branding": False,
+}
+
+TINYMCE_SPELLCHECKER = True
+
+TINYMCE_COMPRESSOR = True

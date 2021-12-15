@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% block content %}
+<h3 class="pt-2 pb-2">Blog</h3>
+<div class="row">
+  <div class="col col-12 mb-3">
+    <!--Add Blog Form-->
+    {% include 'dashboard/blog/add_blog.html' %}
+  </div>
+  <div class=" col col-12">
+    <!--Blog Table-->
+    {% include 'dashboard/blog/blog_table.html' %}
+  </div>
+</div>
+
+{% endblock %}

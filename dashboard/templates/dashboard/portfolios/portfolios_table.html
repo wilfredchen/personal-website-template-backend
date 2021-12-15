@@ -17,7 +17,7 @@
          {% for portfolio in portfolios %}
          <tr>
            <td>
-             <img src="{{portfolio.image_path.url}}" class="rounded portfolio-img">
+             <img src="{% static portfolio.image_path.url %}" class="rounded thumbnail-img">
            </td>
            <td>{{portfolio.title}}</td>
            <td>{{portfolio.short_desc}}</td>
