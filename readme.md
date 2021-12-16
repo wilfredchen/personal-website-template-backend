@@ -5,8 +5,10 @@ This is a backend code + admin dashboard to kick start your personal website dev
 Dependency requirements -
 
 ```
+pip install django
 pip install libsass django-compressor django-sass-processor
 pip install django-widget-tweaks
+pip install pillow
 pip install django-imagekit
 pip install django-cleanup
 pip install djangorestframework

@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate
+from django.db.models.query import Prefetch
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, BlogForm, UpdateBlogForm, CVForm
+from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm, BlogForm, UpdateBlogForm, CVForm
 from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios, UISetting, Blog
 import random
+from pprint import pprint
 # Create your views here.
 
 #login
@@ -305,24 +307,26 @@ def portfolioPage(request):
 @login_required(login_url = 'login')
 def updatePortfolioPage(request, pk):
   portfolios = Portfolios.objects.get(id=pk)
-  updatePortfolioForm = PortfolioForm(instance=portfolios)
+  updatePortfolioForm = UpdatePortfolioForm(instance=portfolios)
   tags = Tags.objects.all()
+  used_tags = portfolios.tags.all()
   if request.method == 'POST':
     updatePortfolioForm = PortfolioForm(request.POST, request.FILES, instance=portfolios)
     if updatePortfolioForm.is_valid():
       portfolios.title = request.POST.get('title')
       portfolios.short_desc = request.POST.get('short_desc')
       portfolios.url = request.POST.get('url')
-      portfolios.tags.clear()
       if request.FILES:
         portfolios.image_path = request.FILES['image_path']
-      for tag in request.POST.getlist('tag'):
-        portfolios.tags.add(Tags.objects.get(id=tag))
+      if request.POST.getlist('tag'):
+        portfolios.tags.clear()
+        for tag in request.POST.getlist('tag'):
+          portfolios.tags.add(Tags.objects.get(id=tag))
       
       portfolios.save()
       return redirect('portfolios')
     
-  context={'updatePortfolioForm': updatePortfolioForm, 'tags': tags,}
+  context={'updatePortfolioForm': updatePortfolioForm, 'tags': tags, 'used_tags': used_tags}
   return render(request, 'dashboard/portfolios/update_portfolios.html', context)
 
 
@@ -364,7 +368,7 @@ def setting(request):
 def blogPage(request):
   blogForm = BlogForm()
   blogs = Blog.objects.all()
-  
+  tags = Tags.objects.all()
   if request.method == 'POST':
     if "add_blog" in request.POST:
       blogForm = BlogForm(request.POST, request.FILES)
@@ -375,10 +379,13 @@ def blogPage(request):
           short_desc = request.POST.get('short_desc'),
           main_desc = request.POST.get('main_desc'),
         )
+        for tag in request.POST.getlist('tag'):
+          newblog.tags.add(Tags.objects.get(id=tag))
+          
         newblog.save()
         return redirect('blog')
    
-  context={'blogForm': blogForm, 'blogs': blogs}
+  context={'blogForm': blogForm, 'blogs': blogs, 'tags': tags}
   return render(request, 'dashboard/blog/blog.html', context)
 
 
@@ -387,6 +394,8 @@ def blogPage(request):
 def updateBlogPage(request, pk):
   blog = Blog.objects.get(id=pk)
   blogForm = UpdateBlogForm(instance=blog)
+  tags = Tags.objects.all()
+  used_tags = blog.tags.all()
   if request.method == 'POST':
     blogForm = BlogForm(request.POST, request.FILES, instance=blog)
     if blogForm.is_valid():
@@ -395,7 +404,11 @@ def updateBlogPage(request, pk):
       blog.main_desc = request.POST.get('main_desc')
       if request.FILES:
         blog.image_path = request.FILES['image_path']
+      if request.POST.getlist('tag'):
+        blog.tags.clear()
+        for tag in request.POST.getlist('tag'):
+          blog.tags.add(Tags.objects.get(id=tag))
       blog.save()
       return redirect('blog')
-  context={'blogForm': blogForm }        
+  context={'blogForm': blogForm, 'tags': tags, 'used_tags': used_tags }        
   return render(request, 'dashboard/blog/update_blog.html', context)

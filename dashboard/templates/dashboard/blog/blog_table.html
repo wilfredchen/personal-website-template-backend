@@ -27,7 +27,7 @@
             </a>
           </td>
           <td>
-            <div class="mt-3">
+            <div>
               <form action="" method="POST" onsubmit="return confirmDelete('{{ blog.title }}')">
                 {% csrf_token %}
                 <input type="hidden" name="blogId" value="{{blog.id}}">

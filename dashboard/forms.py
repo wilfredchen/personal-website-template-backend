@@ -280,7 +280,7 @@ class TagForm(forms.Form, ModelForm):
     fields = ['name']
     
 
-#Add/Update Portfolio
+#Add Portfolio
 class PortfolioForm(forms.Form, ModelForm):
   image_path = forms.ImageField(
     validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
@@ -288,6 +288,45 @@ class PortfolioForm(forms.Form, ModelForm):
     widget = forms.FileInput(),
     label = "Portfolio Photo",
     required = True
+  )
+  title = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Android Application Development For ABC.org'}),
+    label = "Title",
+    required = True
+  )
+  short_desc = forms.CharField(
+    widget = forms.Textarea(attrs={'rows': 3, 'style': 'resize:none', 'placeholder': 'A very short description about your portfolio'}),
+    label = "Short Description",
+    help_text = "Limited to 250 characters",
+    required = True
+  )
+  url = forms.CharField(
+    widget = forms.TextInput(attrs={'placeholder': 'Link to your work if any'}),
+    label = "Portfolio URL",
+    required = False
+  )
+  
+  class Meta:
+    model = Portfolios
+    fields = ['image_path', 'title', 'short_desc', 'url']
+  
+  def clean(self):
+    cleaned_data = super(PortfolioForm, self).clean()
+    short_desc = cleaned_data.get("short_desc")
+    if short_desc is not None and len(short_desc) > 250:
+      self.add_error("short_desc", "Your short description is turning into an essay.")
+    return cleaned_data
+  
+
+# Update Portfolio
+class UpdatePortfolioForm(forms.Form, ModelForm):
+  image_path = forms.ImageField(
+    validators= [validate_image_file_extension, FileExtensionValidator(allowed_extensions=['jpg','jpeg','png'], 
+                                                                       message="The image must be in jpg, jpeg or png format."), validate_image_size],
+    widget = forms.FileInput(),
+    label = "Portfolio Photo",
+    required = False,
+    help_text = "Don't upload new photo if you want to keep using the current photo."
   )
   title = forms.CharField(
     widget = forms.TextInput(attrs={'placeholder': 'Android Application Development For ABC.org'}),
