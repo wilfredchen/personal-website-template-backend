@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from dashboard.models import Certificates, Skills, UISetting, User, Experiences, Education, Portfolios, Tags
+from dashboard.models import Blog, Certificates, Skills, UISetting, User, Experiences, Education, Portfolios, Tags
 
 class UISettingSerializer(ModelSerializer):
   class Meta:
@@ -54,3 +54,15 @@ class PortfolioSerializer(ModelSerializer):
   class Meta:
     model = Portfolios
     fields = ['image_path', 'title', 'short_desc', 'url', 'tags']
+    
+
+class BlogSerializer(ModelSerializer):
+  tags = serializers.SlugRelatedField(
+    many=True,
+    read_only=True,
+    slug_field='name'
+  )
+  
+  class Meta:
+    model = Blog
+    fields = ['image_path','title','short_desc','main_desc','tags']

@@ -384,6 +384,12 @@ def blogPage(request):
           
         newblog.save()
         return redirect('blog')
+      
+    if "delete_blog" in request.POST:
+      blog = Blog.objects.get(id=request.POST.get('blogId'))
+      blog.tags.clear()
+      blog.delete()
+      return redirect('blog')
    
   context={'blogForm': blogForm, 'blogs': blogs, 'tags': tags}
   return render(request, 'dashboard/blog/blog.html', context)

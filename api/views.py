@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from dashboard.models import Certificates, Education, Experiences, User, UISetting, Skills, Portfolios
-from .serializers import AboutSerializer, ContactSerializer, PortfolioSerializer, UISettingSerializer, ExpSerializer, EduSerializer, CertSerializer, SkillSerializer
+from dashboard.models import Blog, Certificates, Education, Experiences, User, UISetting, Skills, Portfolios
+from .serializers import AboutSerializer, BlogSerializer, ContactSerializer, PortfolioSerializer, UISettingSerializer, ExpSerializer, EduSerializer, CertSerializer, SkillSerializer
 from api import serializers
 
 @api_view(['GET'])
@@ -58,3 +58,15 @@ def getPortfolios(request):
   serializers = PortfolioSerializer(portfolio, many = True)
   return Response(serializers.data)
 
+@api_view(['GET'])
+def getBlog(request):
+  blog = Blog.objects.all()
+  serializers = BlogSerializer(blog, many = True)
+  return Response(serializers.data)
+
+@api_view(['GET'])
+def getBlogById(request, pk):
+  blog = Blog.objects.get(id=pk)
+  serializers = BlogSerializer(blog, many = False)
+  return Response(serializers.data)
+  
