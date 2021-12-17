@@ -107,7 +107,7 @@ class UISetting(models.Model):
   show = models.BooleanField()
   
   class Meta:
-    ordering = ['name']
+    ordering = ['id']
     
 
 class Blog(models.Model):

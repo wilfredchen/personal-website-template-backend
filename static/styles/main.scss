@@ -244,6 +244,7 @@ body {
   // Main content
   .content {
     width: calc(100% - 250px);
+    min-height: 100vh;
     margin-left: 250px;
     background: $primary-gray;
     overflow-y: scroll;

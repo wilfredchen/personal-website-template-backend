@@ -338,6 +338,7 @@ def setting(request):
       uiSettingUpdateAbout = UISetting.objects.get(name='About')
       uiSettingUpdateContact = UISetting.objects.get(name='Contact')
       uiSettingUpdatePortfolios = UISetting.objects.get(name='Portfolios')
+      uiSettingUpdateBlog = UISetting.objects.get(name="Blog")
       
       if request.POST.get('About') == 'on':
         uiSettingUpdateAbout.show = True
@@ -359,6 +360,13 @@ def setting(request):
       else:
         uiSettingUpdatePortfolios.show = False
         uiSettingUpdatePortfolios.save()
+        
+      if request.POST.get('Blog') == 'on':
+        uiSettingUpdateBlog.show = True
+        uiSettingUpdateBlog.save()
+      else:
+        uiSettingUpdateBlog.show = False
+        uiSettingUpdateBlog.save()
   
   context={'uiSetting':uiSetting}
   return render(request, 'dashboard/setting/setting.html', context)
