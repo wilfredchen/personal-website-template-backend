@@ -66,3 +66,8 @@ class BlogSerializer(ModelSerializer):
   class Meta:
     model = Blog
     fields = ['image_path','title','short_desc','main_desc','tags']
+    
+
+class PaginationSerializer(serializers.Serializer):
+  totalpages = serializers.IntegerField()
+  currentpage = serializers.IntegerField()

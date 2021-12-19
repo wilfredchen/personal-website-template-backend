@@ -10,6 +10,6 @@ urlpatterns = [
   path('skills', views.getSkill),
   path('contact', views.getContact),
   path('portfolios', views.getPortfolios),
-  path('blog', views.getBlog),
-  path('blog/<str:pk>', views.getBlogById),
+  path('blog/<int:page>', views.getBlog),
+  path('blog/<str:pk>/detail', views.getBlogById),
 ]

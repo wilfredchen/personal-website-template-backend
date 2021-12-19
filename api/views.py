@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from dashboard.models import Blog, Certificates, Education, Experiences, User, UISetting, Skills, Portfolios
-from .serializers import AboutSerializer, BlogSerializer, ContactSerializer, PortfolioSerializer, UISettingSerializer, ExpSerializer, EduSerializer, CertSerializer, SkillSerializer
+from .serializers import AboutSerializer, BlogSerializer, ContactSerializer, PortfolioSerializer, UISettingSerializer, ExpSerializer, EduSerializer, CertSerializer, SkillSerializer, PaginationSerializer
 from api import serializers
+import math
 
 @api_view(['GET'])
 def getAbout(request):
@@ -59,10 +60,30 @@ def getPortfolios(request):
   return Response(serializers.data)
 
 @api_view(['GET'])
-def getBlog(request):
-  blog = Blog.objects.all()
-  serializers = BlogSerializer(blog, many = True)
-  return Response(serializers.data)
+def getBlog(request, page):
+  totalCount = Blog.objects.all().count()
+  perPage = 2
+  currentPage = 1
+  if page:
+    currentPage = page
+    
+  totalPages = math.ceil(totalCount / perPage)
+  start = (currentPage - 1) * perPage
+  
+  if currentPage == 1:
+    blog = Blog.objects.all()[0:perPage]
+    blogSerializer = BlogSerializer(blog, many=True).data
+  else:
+    blog = Blog.objects.all()[start: start + perPage]
+    blogSerializer = BlogSerializer(blog, many=True).data
+    
+  pageData= [{"totalpages": totalPages, "currentpage": currentPage}]
+  pageSerializer = PaginationSerializer(pageData, many=True).data
+  return Response({
+        "blog": blogSerializer,
+        "page": pageSerializer
+    })
+
 
 @api_view(['GET'])
 def getBlogById(request, pk):
