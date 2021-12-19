@@ -94,7 +94,7 @@ class Portfolios(models.Model):
   title = models.CharField(max_length=250, null=False)
   short_desc = models.TextField(null=False)
   url = models.TextField(null=True)
-  tags = models.ManyToManyField(Tags, blank=True, related_name="tags")
+  tags = models.ManyToManyField(Tags, blank=True)
   
   class Meta:
     ordering = ['-created_at']

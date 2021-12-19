@@ -7,7 +7,8 @@ from django.contrib import messages
 from .forms import CertificateForm, SkillForm, UserEditForm, PasswordUpdateForm, ProfilePhotoForm, ExperiencesForm, EducationForm, TagForm, PortfolioForm, UpdatePortfolioForm, BlogForm, UpdateBlogForm, CVForm
 from .models import Experiences, Education, Certificates, Skills, Tags, Portfolios, UISetting, Blog
 import random
-from pprint import pprint
+from django.db import connection
+
 # Create your views here.
 
 #login
@@ -407,9 +408,11 @@ def blogPage(request):
 @login_required(login_url = 'login')
 def updateBlogPage(request, pk):
   blog = Blog.objects.get(id=pk)
+  print(connection.queries)
   blogForm = UpdateBlogForm(instance=blog)
   tags = Tags.objects.all()
   used_tags = blog.tags.all()
+  
   if request.method == 'POST':
     blogForm = BlogForm(request.POST, request.FILES, instance=blog)
     if blogForm.is_valid():
