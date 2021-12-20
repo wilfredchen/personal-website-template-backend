@@ -163,6 +163,9 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # #TinyMCE settings
+TINYMCE_JS_ROOT = BASE_DIR / 'static/tinymce'
+ 
+TINYMCE_COMPRESSOR = True
 
 TINYMCE_DEFAULT_CONFIG = {
     "theme": "silver",
@@ -179,5 +182,3 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 TINYMCE_SPELLCHECKER = True
-
-TINYMCE_COMPRESSOR = True
