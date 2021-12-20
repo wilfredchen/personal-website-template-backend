@@ -11,5 +11,5 @@ urlpatterns = [
   path('contact', views.getContact),
   path('portfolios', views.getPortfolios),
   path('blog/<int:page>', views.getBlog),
-  path('blog/<str:pk>/detail', views.getBlogById),
+  path('blog/detail/<str:pk>', views.getBlogById),
 ]

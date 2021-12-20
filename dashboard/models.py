@@ -113,7 +113,7 @@ class UISetting(models.Model):
 class Blog(models.Model):
   created_at = models.DateTimeField(auto_now_add = True)
   updated_at = models.DateTimeField(auto_now = True)
-  image_path = ProcessedImageField(upload_to='images', processors=[ResizeToFit(600)],format='JPEG',options={'quality': 70},null = True)
+  image_path = ProcessedImageField(upload_to='images', processors=[ResizeToFit(900)],format='JPEG',options={'quality': 75},null = True)
   title = models.CharField(max_length=250, null = False)
   short_desc = models.TextField(null=False)
   main_desc = tinymce_models.HTMLField()

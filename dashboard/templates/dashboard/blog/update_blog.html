@@ -12,7 +12,7 @@
     <!--Update Blog Form -->
     <div class="card p-5 border-rounded">
       <p class="fs-6 fw-bold">Update Existing Blog</p>
-      <form action="" method="POST" novalidate>
+      <form action="" method="POST" novalidate enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-1">
           <label class="form-label font-dark-gray"> {{ blogForm.image_path.label_tag }}

@@ -62,7 +62,7 @@ def getPortfolios(request):
 @api_view(['GET'])
 def getBlog(request, page):
   totalCount = Blog.objects.all().count()
-  perPage = 2
+  perPage = 9
   currentPage = 1
   if page:
     currentPage = page
