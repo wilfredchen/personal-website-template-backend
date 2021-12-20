@@ -14,7 +14,7 @@ class User(AbstractUser):
   bio2 = models.TextField(null=True)
   age = models.IntegerField(null=True)
   nationality = models.CharField(max_length=200,null = True)
-  profile_photo = ProcessedImageField(upload_to='images', processors=[ResizeToFit(1650)],format='JPEG',options={'quality': 75},null = True)
+  profile_photo = ProcessedImageField(upload_to='images', processors=[ResizeToFit(900)],format='JPEG',options={'quality': 100},null = True)
   phone = models.CharField(max_length=200, null=True)
   linkedin_url = models.TextField(null=True)
   facebook_url = models.TextField(null=True)
@@ -113,7 +113,7 @@ class UISetting(models.Model):
 class Blog(models.Model):
   created_at = models.DateTimeField(auto_now_add = True)
   updated_at = models.DateTimeField(auto_now = True)
-  image_path = ProcessedImageField(upload_to='images', processors=[ResizeToFit(900)],format='JPEG',options={'quality': 75},null = True)
+  image_path = ProcessedImageField(upload_to='images', processors=[ResizeToFit(850)],format='JPEG',options={'quality': 90},null = True)
   title = models.CharField(max_length=250, null = False)
   short_desc = models.TextField(null=False)
   main_desc = tinymce_models.HTMLField()
