@@ -208,7 +208,7 @@ class EducationForm(forms.Form, ModelForm):
   grade = forms.CharField(
     widget = forms.TextInput(attrs={'placeholder': 'First Class Honor'}),
     label = "Grade",
-    required = True
+    required = False
   )
   location = forms.CharField(
     widget = forms.TextInput(attrs={'placeholder': 'Singapore'}),
